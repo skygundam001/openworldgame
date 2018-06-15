@@ -52,10 +52,16 @@ function character(name,HP,MP,LV,EX,ATK,DEF,AEname,DEname){
 			gotowhere.addEventListener( "click", gotobutton , false );
 			var aa=new CE('小刀',10,10,10,10);
 			var dd=new CE('衣服',10,10,10,10);
-			var j=new character('10',10,10,10,10,10,10,aa.name,dd.name);
+			var j=new character('10',100,100,1,0,10,10,aa.name,dd.name);
 			var koi=document.getElementById("HI");
 			koi.innerHTML=j.valueout();
+			var iowindow=document.getElementById("stron");
 			
+			var village =document.getElementById("village");
+			
+			var exploration =document.getElementById("exploration");
+			
+			var house =document.getElementById("house");
 		}
 		window.addEventListener( "load", start, false );
 	  </script>
@@ -69,11 +75,10 @@ function character(name,HP,MP,LV,EX,ATK,DEF,AEname,DEname){
 				<input id="exploration" type="button" value="探險" style="margin-bottom:5px;font-size:50px">
 				<input id="house" type="button" value="房屋" style="margin-bottom:5px;font-size:50px">
 			</div>
-			<div id="HI" style="width:50%;margin:0px;font-size:50px>
+			<div id="HI" style="width:50%;margin:0px;float:left;font-size:50px">
 			
 			</div>
 			<div id="stron" style="width:50%;float:left;margin:0px;font-size:50px">
-			KLO
 			<div>
 	  </form>
    </body>
