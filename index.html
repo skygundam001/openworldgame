@@ -50,8 +50,8 @@ function character(name,HP,MP,LV,EX,ATK,DEF,AEname,DEname){
 		{
 			var gotowhere=document.getElementById("gotobutton");
 			gotowhere.addEventListener( "click", gotobutton , false );
-			var aa=new CE('hh',10,10,10,10);
-			var dd=new CE('jj',10,10,10,10);
+			var aa=new CE('小刀',10,10,10,10);
+			var dd=new CE('衣服',10,10,10,10);
 			var j=new character('10',10,10,10,10,10,10,aa.name,dd.name);
 			var koi=document.getElementById("HI");
 			koi.innerHTML=j.valueout();
@@ -62,15 +62,19 @@ function character(name,HP,MP,LV,EX,ATK,DEF,AEname,DEname){
    </head>
    <body>
       <form action = "#">
-			<div id = "character" style = "height:65px;width:100%;"><h3 style ="text-align:center;"><角色名> LV:1 EXP:0/10</h3></div>
+			<!--<div id = "character" style = "height:65px;width:100%;"><h3 style ="text-align:center;"></h3></div>-->
+			
 			<div id = "gotobutton" style = "height:30px;width:100%;">
 				<input id="village" type="button" value="村莊" style="margin-bottom:5px">
 				<input id="exploration" type="button" value="探險" style="margin-bottom:5px">
 				<input id="house" type="button" value="房屋" style="margin-bottom:5px">
 			</div>
-			<div id="HI">
+			<div id="HI" style="width:50%">
 			
 			</div>
+			<div id="stron" style="width:50%">
+			
+			<div>
 	  </form>
    </body>
 </html>
