@@ -31,16 +31,16 @@ function character(name,HP,MP,LV,EX,ATK,DEF,AEname,DEname){
 	this.DE=DEname;
 	this.valueout=function(){
 		var cout=document.getElementById("HI");;
-		cout.innerHTML+=this.name+"<br>";
-		cout.innerHTML+=this.HP+"<br>";
-		cout.innerHTML+=this.MP+"<br>";
-		cout.innerHTML+=this.LV+"<br>";
-		cout.innerHTML+=this.EX+"<br>";
-		cout.innerHTML+=this.UPEX+"<br>";
-		cout.innerHTML+=this.ATK+"<br>";
-		cout.innerHTML+=this.DEF+"<br>";
-		cout.innerHTML+=this.AE+"<br>";
-		cout.innerHTML+=this.DE+"<br>";
+		cout.innerHTML+="角色名:"+this.name+"<br>";
+		cout.innerHTML+="生命:"+this.HP+"<br>";
+		cout.innerHTML+="魔力:"+this.MP+"<br>";
+		cout.innerHTML+="LV:"+this.LV+"<br>";
+		cout.innerHTML+="EXP:"+this.EX;
+		cout.innerHTML+="/"+this.UPEX+"<br>";
+		cout.innerHTML+="攻擊力:"+this.ATK+"<br>";
+		cout.innerHTML+="防禦力:"+this.DEF+"<br>";
+		cout.innerHTML+="武器:"+this.AE+"<br>";
+		cout.innerHTML+="防具:"+this.DE+"<br>";
 		return cout.innerHTML;
 	}
 }
@@ -52,7 +52,7 @@ function character(name,HP,MP,LV,EX,ATK,DEF,AEname,DEname){
 			gotowhere.addEventListener( "click", gotobutton , false );
 			var aa=new CE('hh',10,10,10,10);
 			var dd=new CE('jj',10,10,10,10);
-			var j=new character('10',10,10,10,10,10,10,'aa','dd');
+			var j=new character('10',10,10,10,10,10,10,aa.name,dd.name);
 			var koi=document.getElementById("HI");
 			koi.innerHTML=j.valueout();
 			
