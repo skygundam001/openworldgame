@@ -57,9 +57,31 @@
 				cout.innerHTML+="防具:"+this.DE+"<br>";
 				return cout.innerHTML;
 			}
+			this.nameok=function(nameok){
+				this.name=nameok;
+			}
+			this.LVUP=function(){
+				this.LV=this.LV+1;
+				this.EX=this.EX-this.UPEX;
+				this.UPEX=this.LV*this.LV+10;
+			}
+			this.giveEX=function(giveEXvalue){
+				this.EX=this.EX+giveEXvalue;
+				while(this.EX/this.UPEX >= 1){
+					this.LVUP();
+				}
+			}
 		}
 		
 		function gotobutton(){
+			var iowindow=document.getElementById("stron");
+			iowindow.innerHTML='<div style ="float:top;font-size:50px;background-color:#FFCC00;border:2px orange solid;padding:5px;">'+
+			'<div onclick="" style ="float:top;font-size:50px;background-color:#FFFFCC;border:2px orange solid;text-align:center">村長家</div>'+
+			'</div>'+
+			'<div style ="float:top;font-size:50px;background-color:#FFCC00;border:2px orange solid;padding:5px;">'+
+			'<div onclick="" style ="float:top;font-size:50px;background-color:#FFFFCC;border:2px orange solid;text-align:center">市場</div>'+
+			'</div>';
+			return false;
 		}
 		function villageff(){
 		}
@@ -69,15 +91,32 @@
 		}
 		
 		function gamego(){
-			gs.innerHTML=
-			'<div id = "gotobutton" style = "height:100px;width:100%;">'+
+			gs.innerHTML='輸入你的名子<br>'+
+			'<input id="namename" type="text" value="不知名勇者" style="margin-bottom:5px;font-size:50%">'+
+			'<div style ="float:top;font-size:50px;background-color:#FFCC00;border:2px orange solid;padding:5px;">'+
+			'<div onclick="game()" style ="float:top;font-size:50px;background-color:#FFFFCC;border:2px orange solid;text-align:center">確定</div>'+
+			'</div>'+
+			'<div style ="float:top;font-size:50px;background-color:#FFCC00;border:2px orange solid;padding:5px;">'+
+			'<div onclick="gamereturn()" style ="float:top;font-size:50px;background-color:#FFFFCC;border:2px orange solid;text-align:center">返回</div>'+
+			'</div>';
+			j.nameok(document.getElementById("namename").value);
+		}
+		function gametext(){
+		}
+		function serer(){
+		}
+		
+		function game(){
+			var giveexex=120;
+			j.giveEX(giveexex);
+			gs.innerHTML='<div id = "gotobutton" style = "height:100px;width:100%;">'+
 			'<input id="village" type="button" value="村莊" style="margin-bottom:5px;font-size:50px">'+
 			'<input id="exploration" type="button" value="探險" style="margin-bottom:5px;font-size:50px">'+
 			'<input id="house" type="button" value="房屋" style="margin-bottom:5px;font-size:50px">'+
 			'<input id="backpack" type="button" value="背包" style="margin-bottom:5px;font-size:50px">'+
 			'</div>'+
 			'<div id="HI" style="width:50%;margin:0px;float:left;font-size:50px"></div>'+
-			'<div id="stron" style="width:50%;float:left;margin:0px;font-size:50px;background-color:yellow"><div>';
+			'<div id="stron" style="width:50%;float:left;margin:0px;font-size:50px;background-color:yellow"></div>';
 			var gotowhere=document.getElementById("gotobutton");
 			var koi=document.getElementById("HI");
 			var iowindow=document.getElementById("stron");
@@ -87,19 +126,13 @@
 			var backpack=document.getElementById("backpack");
 			koi.innerHTML=j.valueout(koi)+
 			'<div style ="float:top;font-size:50px;background-color:#FFCC00;border:2px orange solid;padding:5px;">'+
-			'<div onclick="gamereturn()" style ="float:top;font-size:50px;background-color:#FFFFCC;border:2px orange solid;text-align:center">返回<div>'+
+			'<div onclick="gamereturn()" style ="float:top;font-size:50px;background-color:#FFFFCC;border:2px orange solid;text-align:center">返回</div>'+
 			'</div>';
-			iowindow.innerHTML='<input id="namename" type="text" value="你的名子" style="margin-bottom:5px;font-size:50%">';
 			gotowhere.addEventListener( "click", gotobutton , false );
 			village.addEventListener( "click", villageff , false );
 			exploration.addEventListener( "click", explorationf , false );
 			house.addEventListener( "click", housef , false );
 		}
-		function gametext(){
-		}
-		function serer(){
-		}
-		
 		
 		/*function start()
 		{
