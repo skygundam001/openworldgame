@@ -3,74 +3,121 @@
       <meta charset = "utf-8">
 	  <style type = "text/css">
 	  div{overflow:auto;
+		position:relative;
 	  }
-	  p {font-size:16px;
-		font-family:Calibri;
+	  div{
 		
+		font-size:50px;
+	  }
+	  p {font-size:50px;
+		font-family:Calibri;
+		text-align:center;
 	  }
 	  </style>
       <script type = "text/javascript">
-function CE(name,AH,DAH,ADDH,ADDM){
-	this.name=name;
-	this.AH=AH;
-	this.DAH=DAH;
-	this.ADDH=ADDH;
-	this.ADDM=ADDM;
-}//characterequipment
+	  var nwindow=document.getElementById("gs");
+	  var aa=new CE('小刀',10,10,10,10);
+			var dd=new CE('衣服',10,10,10,10);
+			var j=new character('10',100,100,1,0,10,10,aa,dd);
+		function CE(name,AH,DAH,ADDH,ADDM){
+			this.name=name;
+			this.AH=AH;
+			this.DAH=DAH;
+			this.ADDH=ADDH;
+			this.ADDM=ADDM;
+		}//characterequipment
 
-function character(name,HP,MP,LV,EX,ATK,DEF,AEname,DEname){
-	this.name=name;
-	this.HP=HP;
-	this.MP=MP;
-	this.LV=LV;
-	this.EX=EX;
-	this.UPEX=LV*LV+10;
-	this.ATK=ATK;
-	this.DEF=DEF;
-	this.AE=AEname;
-	this.DE=DEname;
-	this.valueout=function(){
-		var cout=document.getElementById("HI");;
-		cout.innerHTML+="角色名:"+this.name+"<br>";
-		cout.innerHTML+="生命:"+this.HP+"<br>";
-		cout.innerHTML+="魔力:"+this.MP+"<br>";
-		cout.innerHTML+="LV:"+this.LV+"<br>";
-		cout.innerHTML+="EXP:"+this.EX;
-		cout.innerHTML+="/"+this.UPEX+"<br>";
-		cout.innerHTML+="攻擊力:"+this.ATK+"<br>";
-		cout.innerHTML+="防禦力:"+this.DEF+"<br>";
-		cout.innerHTML+="武器:"+this.AE+"<br>";
-		cout.innerHTML+="防具:"+this.DE+"<br>";
-		return cout.innerHTML;
-	}
-}
-
-
+		function character(name,HP,MP,LV,EX,ATK,DEF,AEname,DEname){
+			this.name=name;
+			this.HP=HP;
+			this.MP=MP;
+			this.LV=LV;
+			this.EX=EX;
+			this.UPEX=LV*LV+10;
+			this.ATK=ATK+AEname.AH;
+			this.DEF=DEF+DEname.DAH;
+			this.AE=AEname.name;
+			this.DE=DEname.name;
+			this.valueout=function(block){
+				var cout=block;
+				cout.innerHTML+="角色名:"+this.name+"<br>";
+				cout.innerHTML+="生命:"+this.HP+"<br>";
+				cout.innerHTML+="魔力:"+this.MP+"<br>";
+				cout.innerHTML+="LV:"+this.LV+"<br>";
+				cout.innerHTML+="EXP:"+this.EX;
+				cout.innerHTML+="/"+this.UPEX+"<br>";
+				cout.innerHTML+="攻擊力:"+this.ATK+"<br>";
+				cout.innerHTML+="防禦力:"+this.DEF+"<br>";
+				cout.innerHTML+="武器:"+this.AE+"<br>";
+				cout.innerHTML+="防具:"+this.DE+"<br>";
+				return cout.innerHTML;
+			}
+		}
+		
+		function villageff(){
+		}
+		function explorationf(){
+		}
+		function housef(){
+		}
+		
+		function gamego(){
+			gs.innerHTML='<div id = "gotobutton" style = "height:100px;width:100%;"><input id="village" type="button" value="村莊" style="margin-bottom:5px;font-size:50px">'+
+				'<input id="exploration" type="button" value="探險" style="margin-bottom:5px;font-size:50px">'+
+				'<input id="house" type="button" value="房屋" style="margin-bottom:5px;font-size:50px"></div>'+
+			'<div id="HI" style="width:50%;margin:0px;float:left;font-size:50px"></div>'+
+			'<div id="stron" style="width:50%;float:left;margin:0px;font-size:50px;background-color:yellow"><div>';
+			var gotowhere=document.getElementById("gotobutton");
+			var koi=document.getElementById("HI");
+			var iowindow=document.getElementById("stron");
+			var village =document.getElementById("village");
+			var exploration =document.getElementById("exploration");
+			var blockin =document.getElementById("HI");
+			var house =document.getElementById("house");koi.innerHTML=j.valueout(blockin);
+		}
+		function gametext(){
+		}
+		function serer(){
+		}
+		
 		function start()
 		{
-			var gotowhere=document.getElementById("gotobutton");
-			gotowhere.addEventListener( "click", gotobutton , false );
-			var aa=new CE('小刀',10,10,10,10);
-			var dd=new CE('衣服',10,10,10,10);
-			var j=new character('10',100,100,1,0,10,10,aa.name,dd.name);
-			var koi=document.getElementById("HI");
-			koi.innerHTML=j.valueout();
-			var iowindow=document.getElementById("stron");
 			
-			var village =document.getElementById("village");
 			
-			var exploration =document.getElementById("exploration");
+			//gotowhere.addEventListener( "click", gotobutton , false );
 			
-			var house =document.getElementById("house");
+			
+			
+			//
+			
+			
+			
+			//village.addEventListener( "click", villageff , false );
+			
+			//exploration.addEventListener( "click", explorationf , false );
+			
+			//house.addEventListener( "click", housef , false );
 		}
-		window.addEventListener( "load", start, false );
+		//window.addEventListener( "load", start, false );
 	  </script>
    </head>
    <body>
-      <form action = "#">
+   <form action = "#">
+      <div id="gs"style="width:100%";>
+			<p>極小RPG</p>
+			<div id = "start" onclick="gamego()"  type="button" style ="float:bottom;margin:20px;width:50%;left:25%;right:25%;height:100px;text-align:center;">開始遊戲</div>
+			<div id = "game" onclick="gametext()"  type="button" style ="float:bottom;margin:20px;width:50%;left:25%;right:25%;height:100px;text-align:center;">遊戲說明</div>
+			<div id = "start" onclick="serer()"  type="button" style ="float:bottom;margin:20px;width:50%;left:25%;right:25%;height:100px;text-align:center;">開發人員</div>
+			<div id = "HI"></div>
+	  </div>
+	  
+	</form>
+   </body>
+</html>
+<!--
 			<!--<div id = "character" style = "height:65px;width:100%;"><h3 style ="text-align:center;"></h3></div>-->
 			
-			<div id = "gotobutton" style = "height:100px;width:100%;">
+			<!--<div id = "gotobutton" style = "height:100px;width:100%;">
 				<input id="village" type="button" value="村莊" style="margin-bottom:5px;font-size:50px">
 				<input id="exploration" type="button" value="探險" style="margin-bottom:5px;font-size:50px">
 				<input id="house" type="button" value="房屋" style="margin-bottom:5px;font-size:50px">
@@ -78,9 +125,10 @@ function character(name,HP,MP,LV,EX,ATK,DEF,AEname,DEname){
 			<div id="HI" style="width:50%;margin:0px;float:left;font-size:50px">
 			
 			</div>
-			<div id="stron" style="width:50%;float:left;margin:0px;font-size:50px">
+			<div id="stron" style="width:50%;float:left;margin:0px;font-size:50px;background-color:yellow">
 			<div>
-	  </form>
-   </body>
-</html>
+			
+			
+	  -->
+
 <!--input id="cccc" type="button" name="我是按鈕" background-color:#FFFFCC;-->
