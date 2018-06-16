@@ -16,9 +16,15 @@
 	  </style>
       <script type = "text/javascript">
 	  var nwindow=document.getElementById("gs");
-	  var aa=new CE('小刀',10,10,10,10);
-			var dd=new CE('衣服',10,10,10,10);
-			var j=new character('10',100,100,1,0,10,10,aa,dd);
+	  var aa= [];
+	  aa[0]=new CE('小刀',5,0,0,0);
+	  aa[1]=new CE('鐵劍',50,0,0,0);
+	  var dd=[];
+	  dd[0]=new CE('衣服',0,5,0,0);
+	  dd[1]=new CE('皮革裝',0,10,0,0);
+	  dd[2]=new CE('鐵盔甲',0,30,0,0);
+	  
+	  var j=new character('不知名勇者',100,100,1,0,10,10,aa[0],dd[0]);
 		function CE(name,AH,DAH,ADDH,ADDM){
 			this.name=name;
 			this.AH=AH;
@@ -26,7 +32,6 @@
 			this.ADDH=ADDH;
 			this.ADDM=ADDM;
 		}//characterequipment
-
 		function character(name,HP,MP,LV,EX,ATK,DEF,AEname,DEname){
 			this.name=name;
 			this.HP=HP;
@@ -54,6 +59,8 @@
 			}
 		}
 		
+		function gotobutton(){
+		}
 		function villageff(){
 		}
 		function explorationf(){
@@ -62,9 +69,13 @@
 		}
 		
 		function gamego(){
-			gs.innerHTML='<div id = "gotobutton" style = "height:100px;width:100%;"><input id="village" type="button" value="村莊" style="margin-bottom:5px;font-size:50px">'+
-				'<input id="exploration" type="button" value="探險" style="margin-bottom:5px;font-size:50px">'+
-				'<input id="house" type="button" value="房屋" style="margin-bottom:5px;font-size:50px"></div>'+
+			gs.innerHTML=
+			'<div id = "gotobutton" style = "height:100px;width:100%;">'+
+			'<input id="village" type="button" value="村莊" style="margin-bottom:5px;font-size:50px">'+
+			'<input id="exploration" type="button" value="探險" style="margin-bottom:5px;font-size:50px">'+
+			'<input id="house" type="button" value="房屋" style="margin-bottom:5px;font-size:50px">'+
+			'<input id="backpack" type="button" value="背包" style="margin-bottom:5px;font-size:50px">'+
+			'</div>'+
 			'<div id="HI" style="width:50%;margin:0px;float:left;font-size:50px"></div>'+
 			'<div id="stron" style="width:50%;float:left;margin:0px;font-size:50px;background-color:yellow"><div>';
 			var gotowhere=document.getElementById("gotobutton");
@@ -72,42 +83,44 @@
 			var iowindow=document.getElementById("stron");
 			var village =document.getElementById("village");
 			var exploration =document.getElementById("exploration");
-			var blockin =document.getElementById("HI");
-			var house =document.getElementById("house");koi.innerHTML=j.valueout(blockin);
+			var house =document.getElementById("house");
+			var backpack=document.getElementById("backpack");
+			koi.innerHTML=j.valueout(koi)+
+			'<div style ="float:top;font-size:50px;background-color:#FFCC00;border:2px orange solid;padding:5px;">'+
+			'<div onclick="gamereturn()" style ="float:top;font-size:50px;background-color:#FFFFCC;border:2px orange solid;text-align:center">返回<div>'+
+			'</div>';
+			iowindow.innerHTML='<input id="namename" type="text" value="你的名子" style="margin-bottom:5px;font-size:50%">';
+			gotowhere.addEventListener( "click", gotobutton , false );
+			village.addEventListener( "click", villageff , false );
+			exploration.addEventListener( "click", explorationf , false );
+			house.addEventListener( "click", housef , false );
 		}
 		function gametext(){
 		}
 		function serer(){
 		}
 		
-		function start()
+		
+		/*function start()
 		{
-			
-			
-			//gotowhere.addEventListener( "click", gotobutton , false );
-			
-			
-			
-			//
-			
-			
-			
-			//village.addEventListener( "click", villageff , false );
-			
-			//exploration.addEventListener( "click", explorationf , false );
-			
-			//house.addEventListener( "click", housef , false );
-		}
+		}*/
 		//window.addEventListener( "load", start, false );
+		function gamereturn(){
+			gs.innerHTML='<div style ="float:bottom;margin:20px;width:50%;left:25%;right:25%;height:100px;text-align:center;">極小RPG</div>'+
+			'<div id = "start" onclick="gamego()"   style ="float:bottom;margin:20px;width:50%;left:25%;right:25%;height:100px;text-align:center;">開始遊戲</div>'+
+			'<div id = "game" onclick="gametext()"   style ="float:bottom;margin:20px;width:50%;left:25%;right:25%;height:100px;text-align:center;">遊戲說明</div>'+
+			'<div id = "start" onclick="serer()"   style ="float:bottom;margin:20px;width:50%;left:25%;right:25%;height:100px;text-align:center;">開發人員</div>'+
+			'<div id = "HI"></div>';
+		}
 	  </script>
    </head>
    <body>
    <form action = "#">
       <div id="gs"style="width:100%";>
-			<p>極小RPG</p>
-			<div id = "start" onclick="gamego()"  type="button" style ="float:bottom;margin:20px;width:50%;left:25%;right:25%;height:100px;text-align:center;">開始遊戲</div>
-			<div id = "game" onclick="gametext()"  type="button" style ="float:bottom;margin:20px;width:50%;left:25%;right:25%;height:100px;text-align:center;">遊戲說明</div>
-			<div id = "start" onclick="serer()"  type="button" style ="float:bottom;margin:20px;width:50%;left:25%;right:25%;height:100px;text-align:center;">開發人員</div>
+			<div style ="float:bottom;margin:20px;width:50%;left:25%;right:25%;height:100px;text-align:center;">極小RPG</div>
+			<div id = "start" onclick="gamego()"   style ="float:bottom;margin:20px;width:50%;left:25%;right:25%;height:100px;text-align:center;">開始遊戲</div>
+			<div id = "game" onclick="gametext()"   style ="float:bottom;margin:20px;width:50%;left:25%;right:25%;height:100px;text-align:center;">遊戲說明</div>
+			<div id = "start" onclick="serer()"  style ="float:bottom;margin:20px;width:50%;left:25%;right:25%;height:100px;text-align:center;">開發人員</div>
 			<div id = "HI"></div>
 	  </div>
 	  
@@ -115,20 +128,18 @@
    </body>
 </html>
 <!--
-			<!--<div id = "character" style = "height:65px;width:100%;"><h3 style ="text-align:center;"></h3></div>-->
-			
-			<!--<div id = "gotobutton" style = "height:100px;width:100%;">
-				<input id="village" type="button" value="村莊" style="margin-bottom:5px;font-size:50px">
-				<input id="exploration" type="button" value="探險" style="margin-bottom:5px;font-size:50px">
-				<input id="house" type="button" value="房屋" style="margin-bottom:5px;font-size:50px">
-			</div>
-			<div id="HI" style="width:50%;margin:0px;float:left;font-size:50px">
-			
-			</div>
-			<div id="stron" style="width:50%;float:left;margin:0px;font-size:50px;background-color:yellow">
-			<div>
-			
-			
-	  -->
+	<!--<div id = "character" style = "height:65px;width:100%;"><h3 style ="text-align:center;"></h3></div>-->
+	
+	<!--<div id = "gotobutton" style = "height:100px;width:100%;">
+		<input id="village" type="button" value="村莊" style="margin-bottom:5px;font-size:50px">
+		<input id="exploration" type="button" value="探險" style="margin-bottom:5px;font-size:50px">
+		<input id="house" type="button" value="房屋" style="margin-bottom:5px;font-size:50px">
+	</div>
+	<div id="HI" style="width:50%;margin:0px;float:left;font-size:50px">
+	
+	</div>
+	<div id="stron" style="width:50%;float:left;margin:0px;font-size:50px;background-color:yellow">
+	<div>
+-->
 
 <!--input id="cccc" type="button" name="我是按鈕" background-color:#FFFFCC;-->
