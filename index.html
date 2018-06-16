@@ -9,12 +9,12 @@
 		
 		font-size:50px;
 	  }
-	  p {font-size:50px;
-		font-family:Calibri;
+	  p {font-size:30px;
+		
 		text-align:center;
 	  }
 	  </style>
-      <script type = "text/javascript">
+      <script type = "text/javascript">//font-family:Calibri;
 	  var nwindow=document.getElementById("gs");
 	  var aa= [];
 	  aa[0]=new CE('小刀',5,0,0,0);
@@ -23,6 +23,8 @@
 	  dd[0]=new CE('衣服',0,5,0,0);
 	  dd[1]=new CE('皮革裝',0,10,0,0);
 	  dd[2]=new CE('鐵盔甲',0,30,0,0);
+	  var monster=[];
+	  monster[0]=new character('野獸',50,50,1,0,0,0,aa[0],dd[0]);
 	  
 	  var j=new character('不知名勇者',100,100,1,0,10,10,aa[0],dd[0]);
 		function CE(name,AH,DAH,ADDH,ADDM){
@@ -43,6 +45,8 @@
 			this.DEF=DEF+DEname.DAH;
 			this.AE=AEname.name;
 			this.DE=DEname.name;
+			this.money=0;
+			this.backpackarr=[];
 			this.valueout=function(block){
 				var cout=block;
 				cout.innerHTML+="角色名:"+this.name+"<br>";
@@ -55,6 +59,17 @@
 				cout.innerHTML+="防禦力:"+this.DEF+"<br>";
 				cout.innerHTML+="武器:"+this.AE+"<br>";
 				cout.innerHTML+="防具:"+this.DE+"<br>";
+				cout.innerHTML+="錢:"+this.money+"<br>";
+				return cout.innerHTML;
+			}
+			this.backpackarrf=function(block){
+				var cout=block;
+				
+				var i=0;
+				while(this.backpackarr[i]){
+					cout.innerHTML+=this.backpackarr[i]+"<br>";i++;
+				}
+				
 				return cout.innerHTML;
 			}
 			this.nameok=function(nameok){
@@ -71,6 +86,7 @@
 					this.LVUP();
 				}
 			}
+			
 		}
 		function villageff(){
 			var iowindow=document.getElementById("stron");
@@ -82,11 +98,24 @@
 			'</div>';
 			
 		}
+		
 		function explorationf(){
 		var iowindow=document.getElementById("stron");
-			iowindow.innerHTML='jk';
+		var im=0;
+		iowindow.innerHTML='<p>在森林探險</p><br>';
+		iowindow.innerHTML+='<p>遇到了'+monster[im].name+'LV:'+monster[im].LV+'</p><br>';
 		}
+		
 		function housef(){
+		var iowindow=document.getElementById("stron");
+		iowindow.innerHTML='<div style ="float:top;font-size:50px;background-color:#FFCC00;border:2px orange solid;padding:5px;">'+
+			'<div onclick="" style ="float:top;font-size:50px;background-color:#FFFFCC;border:2px orange solid;text-align:center">倉庫</div>'+
+			'</div>';
+		}
+		function backpackf(){
+			var iowindow=document.getElementById("stron");
+			iowindow.innerHTML='';
+			j.backpackarrf(iowindow);
 		}
 		
 		function gamego(){
@@ -101,11 +130,11 @@
 			j.nameok(document.getElementById("namename").value);
 		}
 		function gametext(){
+		
 		}
 		function serer(){
 		}
-		function backpack(){
-		}
+		
 		
 		function game(){
 			var giveexex=0;
@@ -114,7 +143,6 @@
 			'<input id="exploration" type="button" value="探險" style="margin-bottom:5px;font-size:50px">'+
 			'<input id="house" type="button" value="房屋" style="margin-bottom:5px;font-size:50px">'+
 			'<input id="backpack" type="button" value="背包" style="margin-bottom:5px;font-size:50px">'+
-			
 			'</div>'+
 			'<div id="HI" style="width:50%;margin:0px;float:left;font-size:50px"></div>'+
 			'<div id="stron" style="width:50%;float:left;margin:0px;font-size:50px;background-color:yellow"></div>';
@@ -132,7 +160,7 @@
 			village.addEventListener( "click", villageff , false );
 			exploration.addEventListener( "click", explorationf , false );
 			house.addEventListener( "click", housef , false );
-			backpack.addEventListener( "click", backpack , false );
+			backpack.addEventListener( "click", backpackf , false );
 		}
 		
 		/*function start()
