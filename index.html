@@ -72,8 +72,7 @@
 				}
 			}
 		}
-		
-		function gotobutton(){
+		function villageff(){
 			var iowindow=document.getElementById("stron");
 			iowindow.innerHTML='<div style ="float:top;font-size:50px;background-color:#FFCC00;border:2px orange solid;padding:5px;">'+
 			'<div onclick="" style ="float:top;font-size:50px;background-color:#FFFFCC;border:2px orange solid;text-align:center">村長家</div>'+
@@ -81,11 +80,11 @@
 			'<div style ="float:top;font-size:50px;background-color:#FFCC00;border:2px orange solid;padding:5px;">'+
 			'<div onclick="" style ="float:top;font-size:50px;background-color:#FFFFCC;border:2px orange solid;text-align:center">市場</div>'+
 			'</div>';
-			return false;
-		}
-		function villageff(){
+			
 		}
 		function explorationf(){
+		var iowindow=document.getElementById("stron");
+			iowindow.innerHTML='jk';
 		}
 		function housef(){
 		}
@@ -105,15 +104,17 @@
 		}
 		function serer(){
 		}
+		function backpack(){
+		}
 		
 		function game(){
-			var giveexex=120;
-			j.giveEX(giveexex);
+			var giveexex=0;
 			gs.innerHTML='<div id = "gotobutton" style = "height:100px;width:100%;">'+
 			'<input id="village" type="button" value="村莊" style="margin-bottom:5px;font-size:50px">'+
 			'<input id="exploration" type="button" value="探險" style="margin-bottom:5px;font-size:50px">'+
 			'<input id="house" type="button" value="房屋" style="margin-bottom:5px;font-size:50px">'+
 			'<input id="backpack" type="button" value="背包" style="margin-bottom:5px;font-size:50px">'+
+			
 			'</div>'+
 			'<div id="HI" style="width:50%;margin:0px;float:left;font-size:50px"></div>'+
 			'<div id="stron" style="width:50%;float:left;margin:0px;font-size:50px;background-color:yellow"></div>';
@@ -128,10 +129,10 @@
 			'<div style ="float:top;font-size:50px;background-color:#FFCC00;border:2px orange solid;padding:5px;">'+
 			'<div onclick="gamereturn()" style ="float:top;font-size:50px;background-color:#FFFFCC;border:2px orange solid;text-align:center">返回</div>'+
 			'</div>';
-			gotowhere.addEventListener( "click", gotobutton , false );
 			village.addEventListener( "click", villageff , false );
 			exploration.addEventListener( "click", explorationf , false );
 			house.addEventListener( "click", housef , false );
+			backpack.addEventListener( "click", backpack , false );
 		}
 		
 		/*function start()
