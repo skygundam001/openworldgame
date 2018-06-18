@@ -16,17 +16,32 @@
 	  </style>
       <script type = "text/javascript">//font-family:Calibri;
 	  var nwindow=document.getElementById("gs");
+	  
+			
 	  var aa= [];
 	  aa[0]=new CE('小刀',5,0,0,0);
 	  aa[1]=new CE('鐵劍',50,0,0,0);
+	  
 	  var dd=[];
 	  dd[0]=new CE('衣服',0,5,0,0);
 	  dd[1]=new CE('皮革裝',0,10,0,0);
 	  dd[2]=new CE('鐵盔甲',0,30,0,0);
+	  
+	  var commodity=[];
+	  commodity[0]=new CMV('食物',50,10);
+	  commodity[1]=new CMV('血瓶',100,10);
+	  commodity[2]=new CMV('魔瓶',100,10);
+	  
 	  var monster=[];
 	  monster[0]=new character('野獸',50,50,1,0,0,0,aa[0],dd[0]);
 	  
 	  var j=new character('不知名勇者',100,100,1,0,10,10,aa[0],dd[0]);
+	  var cmdm=[];//commoditymoney
+		cmdm[0]=commodity[0].moneyvalue;
+		cmdm[1]=commodity[1].moneyvalue;
+		cmdm[2]=commodity[2].moneyvalue;
+	  
+	  
 		function CE(name,AH,DAH,ADDH,ADDM){
 			this.name=name;
 			this.AH=AH;
@@ -34,6 +49,11 @@
 			this.ADDH=ADDH;
 			this.ADDM=ADDM;
 		}//characterequipment
+		function CMV(name,moneyvalue,value){
+			this.name=name;
+			this.moneyvalue=moneyvalue;
+			this.value=value;
+		}//commodityvalue
 		function character(name,HP,MP,LV,EX,ATK,DEF,AEname,DEname){
 			this.name=name;
 			this.HP=HP;
@@ -45,7 +65,7 @@
 			this.DEF=DEF+DEname.DAH;
 			this.AE=AEname.name;
 			this.DE=DEname.name;
-			this.money=0;
+			this.money=100000;
 			this.backpackarr=[];
 			this.valueout=function(block){
 				var cout=block;
@@ -94,10 +114,59 @@
 			'<div onclick="" style ="float:top;font-size:50px;background-color:#FFFFCC;border:2px orange solid;text-align:center">村長家</div>'+
 			'</div>'+
 			'<div style ="float:top;font-size:50px;background-color:#FFCC00;border:2px orange solid;padding:5px;">'+
-			'<div onclick="" style ="float:top;font-size:50px;background-color:#FFFFCC;border:2px orange solid;text-align:center">市場</div>'+
+			'<div onclick="market()" style ="float:top;font-size:50px;background-color:#FFFFCC;border:2px orange solid;text-align:center">市場</div>'+
 			'</div>';
 			
 		}
+		function market(){
+			var iowindow=document.getElementById("stron");
+			
+			cmdm[0]=rand(commodity[0].moneyvalue);
+			cmdm[1]=rand(commodity[1].moneyvalue);
+			cmdm[2]=rand(commodity[2].moneyvalue);
+			marketout();
+		}
+		function marketout(){
+			var iowindow=document.getElementById("stron");
+			
+			iowindow.innerHTML=
+			'<div style ="float:top;font-size:30px;background-color:#FFCC00">'+
+			commodity[0].name+" 市值:"+cmdm[0]+" 庫存:"+commodity[0].value+
+			
+			'<div onclick="SELL(0)" style ="float:right;font-size:30px;width:30px;height:30px;background-color:#FFFFCC;text-align:center;overflow:visible">賣</div>'+
+			'<div onclick="BUY(0)" style ="float:right;font-size:30px;width:30px;height:30px;background-color:#FFFFCC;text-align:center;overflow:visible">買</div>'+
+			'<br>'+
+			commodity[1].name+" 市值:"+cmdm[1]+" 庫存"+commodity[1].value+
+			
+			'<div onclick="SELL(1)" style ="float:right;font-size:30px;width:30px;height:30px;background-color:#FFFFCC;text-align:center;overflow:visible">賣</div>'+
+			'<div onclick="BUY(1)" style ="float:right;font-size:30px;width:30px;height:30px;background-color:#FFFFCC;text-align:center;overflow:visible">買</div>'+
+			'<br>'+
+			commodity[2].name+" 市值:"+cmdm[2]+" 庫存"+commodity[2].value+
+			
+			'<div onclick="SELL(2)" style ="float:right;font-size:30px;width:30px;height:30px;background-color:#FFFFCC;text-align:center;overflow:visible">賣</div>'+
+			'<div onclick="BUY(2)" style ="float:right;font-size:30px;width:30px;height:30px;background-color:#FFFFCC;text-align:center;overflow:visible">買</div>'+
+			'<br>'+
+			'</div>';
+		}
+		function BUY(thatCM){
+			if(j.money > cmdm[thatCM]){
+				j.money-=cmdm[thatCM];
+				commodity[thatCM].value+=1;
+			}
+			charactervalueout();
+			marketout();
+		}
+		function SELL(thatCM){
+			if(commodity[thatCM].value > 0){
+				j.money+=cmdm[thatCM];
+				commodity[thatCM].value--;
+			}
+			charactervalueout();
+			marketout();
+		}
+		
+		/*'<input id="BUY" type="button" value="買" style="margin-bottom:5px;font-size:50px">'+
+		'<input id="SELL" type="button" value="賣" style="margin-bottom:5px;font-size:50px">'+*/
 		
 		function explorationf(){
 		var iowindow=document.getElementById("stron");
@@ -147,22 +216,41 @@
 			'<div id="HI" style="width:50%;margin:0px;float:left;font-size:50px"></div>'+
 			'<div id="stron" style="width:50%;float:left;margin:0px;font-size:50px;background-color:yellow"></div>';
 			var gotowhere=document.getElementById("gotobutton");
-			var koi=document.getElementById("HI");
+			
 			var iowindow=document.getElementById("stron");
 			var village =document.getElementById("village");
 			var exploration =document.getElementById("exploration");
 			var house =document.getElementById("house");
 			var backpack=document.getElementById("backpack");
-			koi.innerHTML=j.valueout(koi)+
-			'<div style ="float:top;font-size:50px;background-color:#FFCC00;border:2px orange solid;padding:5px;">'+
-			'<div onclick="gamereturn()" style ="float:top;font-size:50px;background-color:#FFFFCC;border:2px orange solid;text-align:center">返回</div>'+
-			'</div>';
+			charactervalueout();
 			village.addEventListener( "click", villageff , false );
 			exploration.addEventListener( "click", explorationf , false );
 			house.addEventListener( "click", housef , false );
 			backpack.addEventListener( "click", backpackf , false );
 		}
 		
+		function rand(cmvcmv)
+		{
+			/*var now=new Date();*/
+			var number = Math.random(); 
+
+			var num=cmvcmv*number;
+			num=Math.round(num);
+			if(num<1)num=1;
+			/*(now.getSeconds())%cmvcmv;
+			num=num+1;*/
+			return num;
+		}
+		
+		function charactervalueout(){
+			var koi=document.getElementById("HI");
+			koi.innerHTML="";
+			koi.innerHTML=j.valueout(koi)+
+			'<div style ="float:top;font-size:50px;background-color:#FFCC00;border:2px orange solid;padding:5px;">'+
+			'<div onclick="gamereturn()" style ="float:top;font-size:50px;background-color:#FFFFCC;border:2px orange solid;text-align:center">返回</div>'+
+			'</div>';
+			return false;
+		}
 		/*function start()
 		{
 		}*/
