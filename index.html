@@ -37,13 +37,13 @@
 	  var aa= [];
 	  aa[0]=new CE('小刀',5,0,0,0,1,10);
 	  aa[1]=new CE('鐵劍',50,0,0,0,0,100);
-	  aa[2]=new CE('龍爪',150,0,0,0,0,0);
+	  aa[2]=new CE('龍爪',60,0,0,0,0,0);
 	  
 	  var dd=[];
 	  dd[0]=new CE('衣服',0,5,0,0,1,10);
 	  dd[1]=new CE('皮革裝',0,10,0,0,0,20);
 	  dd[2]=new CE('鐵盔甲',0,30 ,0,0,0,100);
-	  dd[3]=new CE('龍鱗'  ,0,100,0,0,0);
+	  dd[3]=new CE('龍鱗'  ,0,40,0,0,0);
 	  
 	  var item=[];
 	  item[0]=new it('藥草',10,'生命',0);
@@ -78,14 +78,15 @@
 	  monster[0]=new character('野獸',100,50,1,0,16,0,aa[0],dd[0]);
 	  monster[1]=new character('野獸',150,50,5,0,20,10,aa[0],dd[0]);
 	  monster[2]=new character('野獸',160,50,10,0,30,10,aa[0],dd[0]);
-	  monster[3]=new character('火龍',200,100,100,0,100,100,aa[2],dd[3]);
+	  monster[3]=new character('火龍',200,100,50,0,0,0,aa[2],dd[3]);
 	  
 	  monster[0].monsterLVvalue();
 	  monster[1].monsterLVvalue();
 	  monster[2].monsterLVvalue();
 	  monster[3].monsterLVvalue();
 	  
-	  var j=new character('不知名勇者',100,100,1,0,10,10,aa[0],dd[0]);
+	  var j=new character('不知名勇者',100,100,0,0,10,10,aa[0],dd[0]);
+	  j.LVvalue();
 	  var cmdm=[];//commoditymoney
 		cmdm[0]=commodity[0].moneyvalue;
 		cmdm[1]=commodity[1].moneyvalue;
@@ -176,10 +177,10 @@
 				this.DEF=(this.LV-1)*2+10+this.DEDE.DAH;
 			}
 			this.monsterLVvalue=function(){
-				this.HP=(this.LV-1)*10+this.HP;
-				this.MP=(this.LV-1)*10+this.MP;
-				this.ATK=(this.LV-1)*2+this.ATK;
-				this.DEF=(this.LV-1)*2+this.DEF;
+				this.HP=(this.LV-1)*5+this.HP;
+				this.MP=(this.LV-1)*5+this.MP;
+				this.ATK=(this.LV-1)+this.ATK;
+				this.DEF=(this.LV-1)+this.DEF;
 			}
 			this.WAE=function(AEname){
 				this.ATK=this.ATK-this.AEAE.AH;
@@ -194,6 +195,8 @@
 				this.DEDE=DEname;
 			}
 		}
+		
+		
 		function villageff(){
 			var iowindow=document.getElementById("stron");
 			iowindow.innerHTML='<div style ="float:top;font-size:50px;background-color:#FFCC00;border:2px orange solid;padding:5px;">'+
@@ -210,7 +213,6 @@
 		}
 		function market(){
 			var iowindow=document.getElementById("stron");
-			
 			cmdm[0]=rand(commodity[0].moneyvalue);
 			cmdm[1]=rand(commodity[1].moneyvalue);
 			cmdm[2]=rand(commodity[2].moneyvalue);
@@ -226,58 +228,70 @@
 			
 			iowindow.innerHTML=
 			'<div style ="float:top;font-size:50px;background-color:#FFCC00">'+
-			commodity[0].name+" 市值:"+cmdm[0]+" 庫存:"+commodity[0].reserve+
+			commodity[0].name+" 市值:"+cmdm[0]+" 你擁有:"+commodity[0].reserve+
 			'<br>'+
 			'<div onclick="BUY(0)" style ="float:left;font-size:45px;width:50px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;">買</div>'+
-			'<div onclick="SELL(0)" style ="float:left;font-size:45px;width:50px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;margin-left:50px">賣</div>'+
 			
+			'<div onclick="SELL(0)" style ="float:left;font-size:45px;width:50px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;margin-left:30px">賣</div>'+
+			'<div onclick="BUYALL(0)" style ="float:left;font-size:45px;width:150px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;margin-left:30px">買ALL</div>'+
+			'<div onclick="BUYALL(0)" style ="float:left;font-size:45px;width:150px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;margin-left:30px">賣ALL</div>'+
 			'<br>'+
-			commodity[1].name+" 市值:"+cmdm[1]+" 庫存"+commodity[1].reserve+
+			commodity[1].name+" 市值:"+cmdm[1]+" 你擁有"+commodity[1].reserve+
 			'<br>'+
 			'<div onclick="BUY(1)" style ="float:left;font-size:45px;width:50px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;">買</div>'+
 			'<div onclick="SELL(1)" style ="float:left;font-size:45px;width:50px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;margin-left:50px">賣</div>'+
-			
+			'<div onclick="BUYALL(0)" style ="float:left;font-size:45px;width:150px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;margin-left:30px">買ALL</div>'+
+			'<div onclick="BUYALL(0)" style ="float:left;font-size:45px;width:150px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;margin-left:30px">賣ALL</div>'+
 			
 			'<br>'+
-			commodity[2].name+" 市值:"+cmdm[2]+" 庫存"+commodity[2].reserve+
+			commodity[2].name+" 市值:"+cmdm[2]+" 你擁有"+commodity[2].reserve+
 			'<br>'+
 			'<div onclick="BUY(2)" style ="float:left;font-size:45px;width:50px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;">買</div>'+
 			'<div onclick="SELL(2)" style ="float:left;font-size:45px;width:50px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;margin-left:50px">賣</div>'+
-			
-			
+			'<div onclick="BUYALL(0)" style ="float:left;font-size:45px;width:150px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;margin-left:30px">買ALL</div>'+
+			'<div onclick="BUYALL(0)" style ="float:left;font-size:45px;width:150px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;margin-left:30px">賣ALL</div>'+
 			'<br>'+
-			aa[0].name+" 市值:"+cmdm[3]+" 庫存"+aa[0].value+
+			aa[0].name+" 市值:"+cmdm[3]+" 你擁有"+aa[0].value+
 			'<br>'+
 			'<div onclick="BUYAE(0,3)" style ="float:left;font-size:45px;width:50px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;">買</div>'+
 			'<div onclick="SELLAE(0,3)" style ="float:left;font-size:45px;width:50px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;margin-left:50px">賣</div>'+
-			
+			'<div onclick="BUYAEALL(0,3)" style ="float:left;font-size:45px;width:150px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;margin-left:30px">買ALL</div>'+
+			'<div onclick="SELLAEALL(0,3)" style ="float:left;font-size:45px;width:150px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;margin-left:30px">賣aLL</div>'+
 			
 			'<br>'+
-			aa[1].name+" 市值:"+cmdm[4]+" 庫存"+aa[1].value+
+			aa[1].name+" 市值:"+cmdm[4]+" 你擁有"+aa[1].value+
 			'<br>'+
 			'<div onclick="BUYAE(1,4)" style ="float:left;font-size:45px;width:50px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;">買</div>'+
 			'<div onclick="SELLAE(1,4)" style ="float:left;font-size:45px;width:50px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;margin-left:50px">賣</div>'+
-			
+			'<div onclick="BUYAEALL(1,4)" style ="float:left;font-size:45px;width:150px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;margin-left:30px">買ALL</div>'+
+			'<div onclick="SELLAEALL(1,4)" style ="float:left;font-size:45px;width:150px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;margin-left:30px">賣ALL</div>'+
 			
 			'<br>'+
-			dd[0].name+" 市值:"+cmdm[5]+" 庫存"+dd[0].value+
+			dd[0].name+" 市值:"+cmdm[5]+" 你擁有"+dd[0].value+
 			'<br>'+
 			'<div onclick="BUYDE(0,5)" style ="float:left;font-size:45px;width:50px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;">買</div>'+
 			'<div onclick="SELLDE(0,5)" style ="float:left;font-size:45px;width:50px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;margin-left:50px">賣</div>'+
-			
+			'<div onclick="BUYDEALL(0,5)" style ="float:left;font-size:45px;width:150px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;margin-left:30px">買ALL</div>'+
+			'<div onclick="SELLDEALL(0,5)" style ="float:left;font-size:45px;width:150px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;margin-left:30px">賣ALL</div>'+
 			
 			'<br>'+
-			dd[1].name+" 市值:"+cmdm[6]+" 庫存"+dd[1].value+
+			dd[1].name+" 市值:"+cmdm[6]+" 你擁有"+dd[1].value+
 			'<br>'+
 			'<div onclick="BUYDE(1,6)" style ="float:left;font-size:45px;width:50px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;">買</div>'+
 			'<div onclick="SELLDE(1,6)" style ="float:left;font-size:45px;width:50px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;margin-left:50px">賣</div>'+
 			
+			'<div onclick="BUYDEALL(1,6)" style ="float:left;font-size:45px;width:150px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;margin-left:30px">買ALL</div>'+
+			'<div onclick="SELLDEALL(1,6)" style ="float:left;font-size:45px;width:150px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;margin-left:30px">賣ALL</div>'+
+			
 			
 			'<br>'+
-			dd[2].name+" 市值:"+cmdm[7]+" 庫存"+dd[2].value+
+			dd[2].name+" 市值:"+cmdm[7]+" 你擁有"+dd[2].value+
 			'<br>'+
 			'<div onclick="BUYDE(2,7)" style ="float:left;font-size:45px;width:50px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;">買</div>'+
 			'<div onclick="SELLDE(2,7)" style ="float:left;font-size:45px;width:50px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;margin-left:50px">賣</div>'+
+			
+			'<div onclick="BUYDEALL(2,7)" style ="float:left;font-size:45px;width:150px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;margin-left:30px">買ALL</div>'+
+			'<div onclick="SELLDEALL(2,7)" style ="float:left;font-size:45px;width:150px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;margin-left:30px">賣ALL</div>'+
 			
 			
 			'<br>'+
@@ -285,7 +299,7 @@
 			'</div>';
 		}
 		function BUY(thatCM){
-			if(j.money > cmdm[thatCM]){
+			if(j.money >= cmdm[thatCM]){
 				j.money-=cmdm[thatCM];
 				commodity[thatCM].reserve+=1;
 			}
@@ -295,14 +309,30 @@
 		function SELL(thatCM){
 			if(commodity[thatCM].reserve > 0){
 				j.money+=cmdm[thatCM];
-				commodity[thatCM].reserve--;
+				commodity[thatCM].reserve-=1;
+			}
+			charactervalueout();
+			marketout();
+		}
+		function BUYALL(thatCM){
+			while(j.money >= cmdm[thatCM]){
+				j.money-=cmdm[thatCM];
+				commodity[thatCM].reserve+=1;
+			}
+			charactervalueout();
+			marketout();
+		}
+		function SELLALL(thatCM){
+			while(commodity[thatCM].reserve > 0){
+				j.money+=cmdm[thatCM];
+				commodity[thatCM].reserve-=1;
 			}
 			charactervalueout();
 			marketout();
 		}
 		
 		function BUYAE(thatEE,thatCM){
-			if(j.money > cmdm[thatCM]){
+			if(j.money >= cmdm[thatCM]){
 				j.money-=cmdm[thatCM];
 				aa[thatEE].value+=1;
 			}
@@ -312,13 +342,30 @@
 		function SELLAE(thatEE,thatCM){
 			if(aa[thatEE].value > 0){
 				j.money+=cmdm[thatCM];
-				aa[thatEE].value--;
+				aa[thatEE].value-=1;
 			}
 			charactervalueout();
 			marketout();
 		}
+		function BUYAEALL(thatEE,thatCM){
+			while(j.money >= cmdm[thatCM]){
+				j.money-=cmdm[thatCM];
+				aa[thatEE].value+=1;
+			}
+			charactervalueout();
+			marketout();
+		}
+		function SELLAEALL(thatEE,thatCM){
+			while(aa[thatEE].value > 0){
+				j.money+=cmdm[thatCM];
+				aa[thatEE].value-=1;
+			}
+			charactervalueout();
+			marketout();
+		}
+		
 		function BUYDE(thatEE,thatCM){
-			if(j.money > cmdm[thatCM]){
+			if(j.money >= cmdm[thatCM]){
 				j.money-=cmdm[thatCM];
 				dd[thatEE].value+=1;
 			}
@@ -328,12 +375,27 @@
 		function SELLDE(thatEE,thatCM){
 			if(dd[thatEE].value > 0){
 				j.money+=cmdm[thatCM];
-				dd[thatEE].value--;
+				dd[thatEE].value-=1;
 			}
 			charactervalueout();
 			marketout();
 		}
-		
+		function BUYDEALL(thatEE,thatCM){
+			while(j.money >= cmdm[thatCM]){
+				j.money-=cmdm[thatCM];
+				dd[thatEE].value+=1;
+			}
+			charactervalueout();
+			marketout();
+		}
+		function SELLDEALL(thatEE,thatCM){
+			while(dd[thatEE].value > 0){
+				j.money+=cmdm[thatCM];
+				dd[thatEE].value-=1;
+			}
+			charactervalueout();
+			marketout();
+		}
 		/*'<input id="BUY" type="button" value="買" style="margin-bottom:5px;font-size:50px">'+
 		'<input id="SELL" type="button" value="賣" style="margin-bottom:5px;font-size:50px">'+*/
 		
@@ -357,12 +419,12 @@
 			{
 			var rendom_num = Math.floor( 0+ Math.random() * 2);
 			
-			switch (rendom_num)
-			{
-				case 0: attack(); break;
-				case 1: drop(); break;
-			}
-			
+				switch (rendom_num)
+				{
+					case 0: attack(); break;
+					case 1: drop(); break;
+				}
+				if(j.HP<=0)break;
 			}
 		}
 		else{
@@ -502,33 +564,39 @@
 			start_story.innerHTML=
 				'<div id="show_weapon" style ="float:top;font-size:50px;background-color:#FFCC00;border:2px orange solid;padding:5px;">'+'物品'+'</br>'+'</div>'+
 				'<div id="show_armor0" >'+commodity[0].name+'持有'+commodity[0].value+'個'+"   庫存"+commodity[0].reserve+'</br>'+
-				'<div onclick="TAKE(0)" style ="float:left;font-size:45px;width:50px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;">+</div>'+
-				'<div onclick="PUT(0)" style ="float:left;font-size:45px;width:50px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;margin-left:50px">-</div>'+
+				'<div onclick="TAKE(0,1)" style ="float:left;font-size:45px;width:50px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;">+1</div>'+
+				'<div onclick="TAKE(0,10)" style ="float:left;font-size:45px;width:150px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;margin-left:50px">+10</div>'+
+				'<div onclick="PUT(0,1)" style ="float:left;font-size:45px;width:50px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;margin-left:50px">-1</div>'+
+				'<div onclick="PUT(0,10)" style ="float:left;font-size:45px;width:150px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;margin-left:50px">-10</div>'+
 				'</div>'+
 				
 				'<div id="show_armor1" >'+commodity[1].name+'持有'+commodity[1].value+'個'+"   庫存"+commodity[1].reserve+'</br>'+
-				'<div onclick="TAKE(1)" style ="float:left;font-size:45px;width:50px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;">+</div>'+
-				'<div onclick="PUT(1)" style ="float:left;font-size:45px;width:50px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;margin-left:50px">-</div>'+
+				'<div onclick="TAKE(1,1)" style ="float:left;font-size:45px;width:50px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;">+1</div>'+
+				'<div onclick="TAKE(0,10)" style ="float:left;font-size:45px;width:150px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;margin-left:50px">+10</div>'+
+				'<div onclick="PUT(1,1)" style ="float:left;font-size:45px;width:50px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;margin-left:50px">-1</div>'+
+				'<div onclick="PUT(0,10)" style ="float:left;font-size:45px;width:150px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;margin-left:50px">-10</div>'+
 				'</div>'+
 				
-				'<div id="show_armor2" >'+commodity[2].name+'持有'+commodity[2].value+'個'+"   庫存"+commodity[2].reserve+'</br>'+
-				'<div onclick="TAKE(2)" style ="float:left;font-size:45px;width:50px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;">+</div>'+
-				'<div onclick="PUT(2)" style ="float:left;font-size:45px;width:50px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;margin-left:50px">-</div>'+
+				'<div id="show_armor2" >'+commodity[2].name+'持有'+commodity[2].value+'個'+"   擁有"+commodity[2].reserve+'</br>'+
+				'<div onclick="TAKE(2,1)" style ="float:left;font-size:45px;width:50px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;">+1</div>'+
+				'<div onclick="TAKE(0,10)" style ="float:left;font-size:45px;width:150px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;margin-left:50px">+10</div>'+
+				'<div onclick="PUT(2,1)" style ="float:left;font-size:45px;width:50px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;margin-left:50px">-1</div>'+
+				'<div onclick="PUT(0,10)" style ="float:left;font-size:45px;width:150px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;margin-left:50px">-10</div>'+
 				'</div>';
 				/*'<div id="show_armor1">'+commodity[1].name+'持有'+commodity[1].value+'個</br>'+'</div>'+
 				'<div id="show_armor2">'+commodity[2].name+'持有'+commodity[2].value+'個</br>'+'</div>';*/
 		}
-		function TAKE(thatCM){
-			if(commodity[thatCM].reserve > 0){
-				commodity[thatCM].reserve--;
-				commodity[thatCM].value++;
+		function TAKE(thatCM,VVV){
+			if(commodity[thatCM].reserve >= VVV){
+				commodity[thatCM].reserve-=VVV;
+				commodity[thatCM].value+=VVV;
 			}
 			backpackf();
 		}
-		function PUT(thatCM){
-			if(commodity[thatCM].value > 0){
-				commodity[thatCM].reserve++;
-				commodity[thatCM].value--;
+		function PUT(thatCM,VVV){
+			if(commodity[thatCM].value >= VVV){
+				commodity[thatCM].reserve+=VVV;
+				commodity[thatCM].value-=VVV;
 			}
 			backpackf();
 		}
@@ -542,33 +610,33 @@
 	
 			start_story.innerHTML=  
 			'<div id="show_weapon" style ="float:top;font-size:50px;background-color:#FFCC00;border:2px orange solid;padding:5px;">'+'武器'+'</br>'+'</div>'+
-			'<div id="show_weapon0">'+aa[0].name+'持有'+aa[0].value+'個'+'</div>'+
+			'<div id="show_weapon0">'+aa[0].name+'庫存'+aa[0].value+'個'+'</div>'+
 			'<div onclick="equipA(0)" style ="float:right;font-size:45px;width:100px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;">裝備</div>'
 			+
 			'</br>'+
-			'<div id="show_weapon1">'+aa[1].name+'持有'+aa[1].value+'個'+'</div>'+
+			'<div id="show_weapon1">'+aa[1].name+'庫存'+aa[1].value+'個'+'</div>'+
 			'<div onclick="equipA(1)" style ="float:right;font-size:45px;width:100px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;">裝備</div>'
 			+
 			'</br>'+
 			
 			'<div id="show_weapon" style ="float:top;font-size:50px;background-color:#FFCC00;border:2px orange solid;padding:5px;">'+'防具'+'</br>'+'</div>'+
-			'<div id="show_armor0" >'+dd[0].name+'持有'+dd[0].value+'個'+
+			'<div id="show_armor0" >'+dd[0].name+'庫存'+dd[0].value+'個'+
 			'<div onclick="equipd(0)" style ="float:right;font-size:45px;width:100px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;">裝備</div>'
 			+
 			'</br>'+'</div>'+
-			'<div id="show_armor1">'+dd[1].name+'持有'+dd[1].value+'個'+'</div>'+
+			'<div id="show_armor1">'+dd[1].name+'庫存'+dd[1].value+'個'+'</div>'+
 			'<div onclick="equipd(1)" style ="float:right;font-size:45px;width:100px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;">裝備</div>'
 			+
 			'</br>'+
-			'<div id="show_armor2">'+dd[2].name+'持有'+dd[2].value+'個'+'</div>'+
+			'<div id="show_armor2">'+dd[2].name+'庫存'+dd[2].value+'個'+'</div>'+
 			'<div onclick="equipd(2)" style ="float:right;font-size:45px;width:100px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;">裝備</div>'
 			+
 			'</br>'+
 			
 			'<div id="show_weapon" style ="float:top;font-size:50px;background-color:#FFCC00;border:2px orange solid;padding:5px;">'+'物品'+'</br>'+'</div>'+
-			'<div id="show_armor0" >'+commodity[0].name+'持有'+commodity[0].reserve+'個</br>'+'</div>'+
-			'<div id="show_armor1">'+commodity[1].name+'持有'+commodity[1].reserve+'個</br>'+'</div>'+
-			'<div id="show_armor2">'+commodity[2].name+'持有'+commodity[2].reserve+'個</br>'+'</div>';
+			'<div id="show_armor0" >'+commodity[0].name+'庫存'+commodity[0].reserve+'個</br>'+'</div>'+
+			'<div id="show_armor1">'+commodity[1].name+'庫存'+commodity[1].reserve+'個</br>'+'</div>'+
+			'<div id="show_armor2">'+commodity[2].name+'庫存'+commodity[2].reserve+'個</br>'+'</div>';
 		}
 		function equipA(theretype){
 			if(aa[theretype].value>0)
@@ -594,7 +662,7 @@
 			'<div style ="float:top;font-size:50px;background-color:#FFCC00;border:2px orange solid;padding:5px;">'+
 			'<div onclick="gamereturn()" style ="float:top;font-size:50px;background-color:#FFFFCC;border:2px orange solid;text-align:center">返回</div>'+
 			'</div>';
-			j.nameok(document.getElementById("namename").value);
+			
 		}//background-color:#FFCC00;
 		function gametext(){
 		gs.innerHTML='<div style="width:100%;margin:0px;float:left;font-size:50px;background-color:rgba(255,204,0,0.6);">'+
@@ -623,6 +691,7 @@
 		
 		
 		function game(){
+			j.nameok(document.getElementById("namename").value);
 			var giveexex=0;
 			gs.innerHTML='<div id = "gotobutton" style = "height:100px;width:100%;">'+
 			'<input id="village" type="button" value="村莊" style="margin-bottom:5px;font-size:50px">'+
@@ -685,7 +754,7 @@
 		
 		function imgmusic(){
 			gs.innerHTML=
-			'<a style="font-size:50px;" href="https://pixabay.com/zh/%E9%BE%99%E7%9D%9B-%E9%BE%99%E7%9A%AE%E8%82%A4-%E5%8D%B1%E9%99%A9%E7%9A%84%E9%BE%99-%E9%BE%99-%E9%BE%99%E7%A5%9E%E8%AF%9D-%E9%BE%99%E5%B9%B4-%E5%A4%A9%E5%B9%B2%E5%9C%B0%E6%94%AF-3235673/" target=_blank>背景圖來源<br></a>'+
+			
 			'<a style="font-size:50px;" href="https://maoudamashii.jokersounds.com/list/game10.html" target=_blank>音樂來源網站(村02)<br></a>'+
 			'<div style ="float:top;font-size:50px;background-color:#FFCC00;border:2px orange solid;padding:5px;">'+
 			'<div onclick="gamereturn()" style ="float:top;font-size:50px;background-color:#FFFFCC;border:2px orange solid;text-align:center">返回</div>'+
@@ -697,7 +766,7 @@
    <form action = "#">
    
 
-      <div id="gs"style="width:100%;background-image:url(dragon-eye-3235673_1280.png);height:100%;">
+      <div id="gs"style="width:100%;height:100%;">
 			<div style ="float:bottom;margin:20px;width:50%;left:25%;right:25%;height:100px;text-align:center;">極小RPG</div>
 			<div id = "start" onclick="gamego()"   style ="float:bottom;margin:20px;width:50%;left:25%;right:25%;height:100px;text-align:center;">開始遊戲</div>
 			<div id = "game" onclick="gametext()"   style ="float:bottom;margin:20px;width:50%;left:25%;right:25%;height:100px;text-align:center;">遊戲說明</div>
@@ -711,7 +780,7 @@
 </html>
 <!--
 	<!--<div id = "character" style = "height:65px;width:100%;"><h3 style ="text-align:center;"></h3></div>-->
-	
+	<!--background-image:url(dragon-eye-3235673_1280.png);-->
 	<!--<div id = "gotobutton" style = "height:100px;width:100%;">
 		<input id="village" type="button" value="村莊" style="margin-bottom:5px;font-size:50px">
 		<input id="exploration" type="button" value="探險" style="margin-bottom:5px;font-size:50px">
