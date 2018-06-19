@@ -1,9 +1,11 @@
 <html>
    <head>
+   <embed src="game_maoudamashii_5_village02.mp3" autostart="true" loop="true" hidden=true >
       <meta charset = "utf-8">
 	  <style type = "text/css">
 	  div{overflow:auto;
 		position:relative;
+		background-size:100%
 	  }
 	  div{
 		
@@ -195,12 +197,16 @@
 		function villageff(){
 			var iowindow=document.getElementById("stron");
 			iowindow.innerHTML='<div style ="float:top;font-size:50px;background-color:#FFCC00;border:2px orange solid;padding:5px;">'+
-			'<div onclick="" style ="float:top;font-size:50px;background-color:#FFFFCC;border:2px orange solid;text-align:center">村長家</div>'+
+			'<div onclick="villageHome()" style ="float:top;font-size:50px;background-color:#FFFFCC;border:2px orange solid;text-align:center">村長家</div>'+
 			'</div>'+
 			'<div style ="float:top;font-size:50px;background-color:#FFCC00;border:2px orange solid;padding:5px;">'+
 			'<div onclick="market()" style ="float:top;font-size:50px;background-color:#FFFFCC;border:2px orange solid;text-align:center">市場</div>'+
 			'</div>';
 			
+		}
+		function villageHome(){
+			var iowindow=document.getElementById("stron");
+			iowindow.innerHTML='<p>嗨!你好!</p>';
 		}
 		function market(){
 			var iowindow=document.getElementById("stron");
@@ -589,9 +595,23 @@
 			'<div onclick="gamereturn()" style ="float:top;font-size:50px;background-color:#FFFFCC;border:2px orange solid;text-align:center">返回</div>'+
 			'</div>';
 			j.nameok(document.getElementById("namename").value);
-		}
+		}//background-color:#FFCC00;
 		function gametext(){
-			
+		gs.innerHTML='<div style="width:100%;margin:0px;float:left;font-size:50px;background-color:rgba(255,204,0,0.6);">'+
+			'目前物品會有  糧食 血瓶 魔瓶<br>'+
+			'武器有 小刀 鐵劍<br>'+
+			'防具有  衣服 皮革裝 鐵盔甲<br>'+
+			'背包可以放物品 背包裡的物品在結束後會清空  可以對角色探險產生幫助 <br>'+
+			'糧食增加探險次數 1個單位增加一次探險事件 <br>'+
+			'血瓶增加生命10 點 魔瓶增加魔力10 點<br>'+
+			'探險100次事件即可挑戰火龍<br>'+
+			'村莊可以準備物品或與村長純聊天<br>'+
+			'每次探險事件結束角色回滿生命與魔力<br>'+
+			'房屋存放探險得到的物品<br>'+
+			'市場買賣物品武器防具  價格隨機<br>'+
+			'</div>'+
+			'<div style ="float:top;font-size:50px;background-color:#FFCC00;border:2px orange solid;padding:5px;">'+
+			'<div onclick="gamereturn()" style ="float:top;font-size:50px;background-color:#FFFFCC;border:2px orange solid;text-align:center">返回</div></div>';
 		}
 		function serer(){
 			gs.innerHTML=
@@ -657,15 +677,27 @@
 			'<div style ="float:bottom;margin:20px;width:50%;left:25%;right:25%;height:100px;text-align:center;">極小RPG</div>'+
 			'<div id = "start" onclick="gamego()"   style ="float:bottom;margin:20px;width:50%;left:25%;right:25%;height:100px;text-align:center;">開始遊戲</div>'+
 			'<div id = "game" onclick="gametext()"   style ="float:bottom;margin:20px;width:50%;left:25%;right:25%;height:100px;text-align:center;">遊戲說明</div>'+
+			'<div id = "imgmusic" onclick = "imgmusic()" style = "float:bottom;margin:20px;width:50%;left:25%;right:25%;height:100px;text-align:center;">遊戲素材來源</div>'+
 			'<div id = "start" onclick="serer()"   style ="float:bottom;margin:20px;width:50%;left:25%;right:25%;height:100px;text-align:center;">開發人員</div>'+
 			'<div id = "HI"></div>'
 			;
+		}
+		
+		function imgmusic(){
+			gs.innerHTML=
+			'<a style="font-size:50px;" href="https://pixabay.com/zh/%E9%BE%99%E7%9D%9B-%E9%BE%99%E7%9A%AE%E8%82%A4-%E5%8D%B1%E9%99%A9%E7%9A%84%E9%BE%99-%E9%BE%99-%E9%BE%99%E7%A5%9E%E8%AF%9D-%E9%BE%99%E5%B9%B4-%E5%A4%A9%E5%B9%B2%E5%9C%B0%E6%94%AF-3235673/" target=_blank>背景圖來源<br></a>'+
+			'<a style="font-size:50px;" href="https://maoudamashii.jokersounds.com/list/game10.html" target=_blank>音樂來源網站(村02)<br></a>'+
+			'<div style ="float:top;font-size:50px;background-color:#FFCC00;border:2px orange solid;padding:5px;">'+
+			'<div onclick="gamereturn()" style ="float:top;font-size:50px;background-color:#FFFFCC;border:2px orange solid;text-align:center">返回</div>'+
+			'</div>';
 		}
 	  </script>
    </head>
    <body>
    <form action = "#">
-      <div id="gs"style="width:100%;background-image:url(dragon-eye-3235673_1280.png);height:100%">
+   
+
+      <div id="gs"style="width:100%;background-image:url(dragon-eye-3235673_1280.png);height:100%;">
 			<div style ="float:bottom;margin:20px;width:50%;left:25%;right:25%;height:100px;text-align:center;">極小RPG</div>
 			<div id = "start" onclick="gamego()"   style ="float:bottom;margin:20px;width:50%;left:25%;right:25%;height:100px;text-align:center;">開始遊戲</div>
 			<div id = "game" onclick="gametext()"   style ="float:bottom;margin:20px;width:50%;left:25%;right:25%;height:100px;text-align:center;">遊戲說明</div>
