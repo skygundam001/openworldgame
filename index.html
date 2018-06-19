@@ -10,50 +10,108 @@
 		font-size:50px;
 	  }
 	  p {font-size:30px;
-		
+		border : 3px blue solid;
 		text-align:center;
 	  }
+	  .story_border
+		{
+		font-family:Calibri;	
+		border-width:thick;	
+		border-color:black red blue green;
+		width: 100%; 
+		height: 100%; 
+		overflow: scroll;
+		font-size:50px;
+		background-color:yellow;
+		float:left;
+		margin:0px;
+		
+		}
 	  </style>
       <script type = "text/javascript">//font-family:Calibri;
 	  var nwindow=document.getElementById("gs");
 	  
 			
 	  var aa= [];
-	  aa[0]=new CE('小刀',5,0,0,0,1);
-	  aa[1]=new CE('鐵劍',50,0,0,0,0);
+	  aa[0]=new CE('小刀',5,0,0,0,1,10);
+	  aa[1]=new CE('鐵劍',50,0,0,0,0,100);
+	  aa[2]=new CE('龍爪',150,0,0,0,0,0);
 	  
 	  var dd=[];
-	  dd[0]=new CE('衣服',0,5,0,0,1);
-	  dd[1]=new CE('皮革裝',0,10,0,0,0);
-	  dd[2]=new CE('鐵盔甲',0,30,0,0,0);
+	  dd[0]=new CE('衣服',0,5,0,0,1,10);
+	  dd[1]=new CE('皮革裝',0,10,0,0,0,20);
+	  dd[2]=new CE('鐵盔甲',0,30 ,0,0,0,100);
+	  dd[3]=new CE('龍鱗'  ,0,100,0,0,0);
+	  
+	  var item=[];
+	  item[0]=new it('藥草',10,'生命',0);
+	  item[1]=new it('魔力瓶',10,'魔力',1);
+	  item[2]=new it('修練書',10,'經驗',2);
+	  item[3]=new it('錢袋',10,'金錢',3);
+	  //統計有幾個  武器，防具，怪，撿
+	  var num=new number(2,3,3,4);//
+		//num命名函數
+	  function number(weapon,armor,monster,item)
+	  {
+		this.weapon=weapon;
+		this.armor=armor;
+		this.monster=monster;
+		this.item=item;
+	  }
+	  //item 命名函數
+	  function it(name,amount,effect,type)//type:0=HP 1=MP 2=EXP 3=money
+	  {
+		this.name=name;
+		this.amount=amount;
+		this.effect=effect;
+		this.type=type;
+	  }
 	  
 	  var commodity=[];
-	  commodity[0]=new CMV('食物',50,10);
-	  commodity[1]=new CMV('血瓶',100,10);
-	  commodity[2]=new CMV('魔瓶',100,10);
+	  commodity[0]=new CMV('食物',50,100,0,0,0);
+	  commodity[1]=new CMV('血瓶',100,0,10,0,0);
+	  commodity[2]=new CMV('魔瓶',100,0,0,10,0);
 	  
 	  var monster=[];
-	  monster[0]=new character('野獸',50,50,1,0,0,0,aa[0],dd[0]);
+	  monster[0]=new character('野獸',100,50,1,0,16,0,aa[0],dd[0]);
+	  monster[1]=new character('野獸',150,50,5,0,20,10,aa[0],dd[0]);
+	  monster[2]=new character('野獸',160,50,10,0,30,10,aa[0],dd[0]);
+	  monster[3]=new character('火龍',200,100,100,0,100,100,aa[2],dd[3]);
+	  
+	  monster[0].monsterLVvalue();
+	  monster[1].monsterLVvalue();
+	  monster[2].monsterLVvalue();
+	  monster[3].monsterLVvalue();
 	  
 	  var j=new character('不知名勇者',100,100,1,0,10,10,aa[0],dd[0]);
 	  var cmdm=[];//commoditymoney
 		cmdm[0]=commodity[0].moneyvalue;
 		cmdm[1]=commodity[1].moneyvalue;
 		cmdm[2]=commodity[2].moneyvalue;
+		
+		cmdm[3]=aa[0].money;
+		cmdm[4]=aa[1].money;
+		cmdm[5]=dd[0].money;
+		cmdm[6]=dd[1].money;
+		cmdm[7]=dd[2].money;
 	  
 	  
-		function CE(name,AH,DAH,ADDH,ADDM,value){
+		function CE(name,AH,DAH,ADDH,ADDM,value,money){
 			this.name=name;
 			this.AH=AH;
 			this.DAH=DAH;
 			this.ADDH=ADDH;
 			this.ADDM=ADDM;
+			this.money=money;
 			this.value=value;
 		}//characterequipment
-		function CMV(name,moneyvalue,value){
+		function CMV(name,moneyvalue,value,hpamount,mpamount,reserve){
 			this.name=name;
 			this.moneyvalue=moneyvalue;
 			this.value=value;
+			this.hpamount=hpamount;
+			this.mpamount=mpamount;
+			this.reserve=reserve;
 		}//commodityvalue
 		function character(name,HP,MP,LV,EX,ATK,DEF,AEname,DEname){
 			this.name=name;
@@ -66,7 +124,9 @@
 			this.DEF=DEF+DEname.DAH;
 			this.AE=AEname.name;
 			this.DE=DEname.name;
-			this.money=100000;
+			this.AEAE=AEname;
+			this.DEDE=DEname;
+			this.money=0;
 			this.backpackarr=[];
 			this.valueout=function(block){
 				var cout=block;
@@ -107,7 +167,30 @@
 					this.LVUP();
 				}
 			}
-			
+			this.LVvalue=function(){
+				this.HP=(this.LV-1)*10+100;
+				this.MP=(this.LV-1)*10+100;
+				this.ATK=(this.LV-1)*2+10+this.AEAE.AH;
+				this.DEF=(this.LV-1)*2+10+this.DEDE.DAH;
+			}
+			this.monsterLVvalue=function(){
+				this.HP=(this.LV-1)*10+this.HP;
+				this.MP=(this.LV-1)*10+this.MP;
+				this.ATK=(this.LV-1)*2+this.ATK;
+				this.DEF=(this.LV-1)*2+this.DEF;
+			}
+			this.WAE=function(AEname){
+				this.ATK=this.ATK-this.AEAE.AH;
+				this.ATK=this.ATK+AEname.AH;
+				this.AE=AEname.name;
+				this.AEAE=AEname;
+			}
+			this.WDE=function(DEname){
+				this.DEF=this.DEF-this.DEDE.DAH;
+				this.DEF=this.DEF+DEname.DAH;
+				this.DE=DEname.name;
+				this.DEDE=DEname;
+			}
 		}
 		function villageff(){
 			var iowindow=document.getElementById("stron");
@@ -125,6 +208,11 @@
 			cmdm[0]=rand(commodity[0].moneyvalue);
 			cmdm[1]=rand(commodity[1].moneyvalue);
 			cmdm[2]=rand(commodity[2].moneyvalue);
+			cmdm[3]=rand(aa[0].money);
+			cmdm[4]=rand(aa[1].money);
+			cmdm[5]=rand(dd[0].money);
+			cmdm[6]=rand(dd[1].money);
+			cmdm[7]=rand(dd[2].money);
 			marketout();
 		}
 		function marketout(){
@@ -132,40 +220,109 @@
 			
 			iowindow.innerHTML=
 			'<div style ="float:top;font-size:50px;background-color:#FFCC00">'+
-			commodity[0].name+" 市值:"+cmdm[0]+" 庫存:"+commodity[0].value+
+			commodity[0].name+" 市值:"+cmdm[0]+" 庫存:"+commodity[0].reserve+
 			'<br>'+
 			'<div onclick="BUY(0)" style ="float:left;font-size:45px;width:50px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;">買</div>'+
 			'<div onclick="SELL(0)" style ="float:left;font-size:45px;width:50px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;margin-left:50px">賣</div>'+
 			
 			'<br>'+
-			commodity[1].name+" 市值:"+cmdm[1]+" 庫存"+commodity[1].value+
+			commodity[1].name+" 市值:"+cmdm[1]+" 庫存"+commodity[1].reserve+
 			'<br>'+
 			'<div onclick="BUY(1)" style ="float:left;font-size:45px;width:50px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;">買</div>'+
 			'<div onclick="SELL(1)" style ="float:left;font-size:45px;width:50px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;margin-left:50px">賣</div>'+
 			
 			
 			'<br>'+
-			commodity[2].name+" 市值:"+cmdm[2]+" 庫存"+commodity[2].value+
+			commodity[2].name+" 市值:"+cmdm[2]+" 庫存"+commodity[2].reserve+
 			'<br>'+
 			'<div onclick="BUY(2)" style ="float:left;font-size:45px;width:50px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;">買</div>'+
 			'<div onclick="SELL(2)" style ="float:left;font-size:45px;width:50px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;margin-left:50px">賣</div>'+
 			
 			
 			'<br>'+
+			aa[0].name+" 市值:"+cmdm[3]+" 庫存"+aa[0].value+
+			'<br>'+
+			'<div onclick="BUYAE(0,3)" style ="float:left;font-size:45px;width:50px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;">買</div>'+
+			'<div onclick="SELLAE(0,3)" style ="float:left;font-size:45px;width:50px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;margin-left:50px">賣</div>'+
+			
+			
+			'<br>'+
+			aa[1].name+" 市值:"+cmdm[4]+" 庫存"+aa[1].value+
+			'<br>'+
+			'<div onclick="BUYAE(1,4)" style ="float:left;font-size:45px;width:50px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;">買</div>'+
+			'<div onclick="SELLAE(1,4)" style ="float:left;font-size:45px;width:50px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;margin-left:50px">賣</div>'+
+			
+			
+			'<br>'+
+			dd[0].name+" 市值:"+cmdm[5]+" 庫存"+dd[0].value+
+			'<br>'+
+			'<div onclick="BUYDE(0,5)" style ="float:left;font-size:45px;width:50px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;">買</div>'+
+			'<div onclick="SELLDE(0,5)" style ="float:left;font-size:45px;width:50px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;margin-left:50px">賣</div>'+
+			
+			
+			'<br>'+
+			dd[1].name+" 市值:"+cmdm[6]+" 庫存"+dd[1].value+
+			'<br>'+
+			'<div onclick="BUYDE(1,6)" style ="float:left;font-size:45px;width:50px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;">買</div>'+
+			'<div onclick="SELLDE(1,6)" style ="float:left;font-size:45px;width:50px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;margin-left:50px">賣</div>'+
+			
+			
+			'<br>'+
+			dd[2].name+" 市值:"+cmdm[7]+" 庫存"+dd[2].value+
+			'<br>'+
+			'<div onclick="BUYDE(2,7)" style ="float:left;font-size:45px;width:50px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;">買</div>'+
+			'<div onclick="SELLDE(2,7)" style ="float:left;font-size:45px;width:50px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;margin-left:50px">賣</div>'+
+			
+			
+			'<br>'+
+			
 			'</div>';
 		}
 		function BUY(thatCM){
 			if(j.money > cmdm[thatCM]){
 				j.money-=cmdm[thatCM];
-				commodity[thatCM].value+=1;
+				commodity[thatCM].reserve+=1;
 			}
 			charactervalueout();
 			marketout();
 		}
 		function SELL(thatCM){
-			if(commodity[thatCM].value > 0){
+			if(commodity[thatCM].reserve > 0){
 				j.money+=cmdm[thatCM];
-				commodity[thatCM].value--;
+				commodity[thatCM].reserve--;
+			}
+			charactervalueout();
+			marketout();
+		}
+		
+		function BUYAE(thatEE,thatCM){
+			if(j.money > cmdm[thatCM]){
+				j.money-=cmdm[thatCM];
+				aa[thatEE].value+=1;
+			}
+			charactervalueout();
+			marketout();
+		}
+		function SELLAE(thatEE,thatCM){
+			if(aa[thatEE].value > 0){
+				j.money+=cmdm[thatCM];
+				aa[thatEE].value--;
+			}
+			charactervalueout();
+			marketout();
+		}
+		function BUYDE(thatEE,thatCM){
+			if(j.money > cmdm[thatCM]){
+				j.money-=cmdm[thatCM];
+				dd[thatEE].value+=1;
+			}
+			charactervalueout();
+			marketout();
+		}
+		function SELLDE(thatEE,thatCM){
+			if(dd[thatEE].value > 0){
+				j.money+=cmdm[thatCM];
+				dd[thatEE].value--;
 			}
 			charactervalueout();
 			marketout();
@@ -174,23 +331,252 @@
 		/*'<input id="BUY" type="button" value="買" style="margin-bottom:5px;font-size:50px">'+
 		'<input id="SELL" type="button" value="賣" style="margin-bottom:5px;font-size:50px">'+*/
 		
-		function explorationf(){
+		function explorationf(food){
 		var iowindow=document.getElementById("stron");
-		var im=0;
-		iowindow.innerHTML='<p>在森林探險</p><br>';
-		iowindow.innerHTML+='<p>遇到了'+monster[im].name+'LV:'+monster[im].LV+'</p><br>';
+		iowindow.innerHTML='<div id="ex" class = "story_border" ></div><br>';
+		var start_story=document.getElementById("ex");
+		start_story.innerHTML='<p>在森林探險</p><br>';
+		//加設food
+		var c=0;
+		for(c=0;c<3;c++){
+			j.HP+=commodity[c].hpamount*commodity[c].value;
+			j.MP+=commodity[c].mpamount*commodity[c].value;
+		}
+		food=commodity[0].value;
+		if(food==0){
+			food=1;
+		}
+		if(food!=100){
+			for (var i=0;i<food;i++)
+			{
+			var rendom_num = Math.floor( 0+ Math.random() * 2);
+			
+			switch (rendom_num)
+			{
+				case 0: attack(); break;
+				case 1: drop(); break;
+			}
+			
+			}
+		}
+		else{
+			attack2();
+		}
+		for(c=0;c<3;c++){
+			commodity[c].value=0;
+			commodity[c].value=0;
+		}
+		j.LVvalue();
+		var koi=document.getElementById("HI");
+		koi.innerHTML="";
+		koi.innerHTML=j.valueout(koi)+
+			'<div style ="float:top;font-size:50px;background-color:#FFCC00;border:2px orange solid;padding:5px;">'+
+			'<div onclick="gamereturn()" style ="float:top;font-size:50px;background-color:#FFFFCC;border:2px orange solid;text-align:center">返回</div>'+
+			'</div>';
 		}
 		
+		function attack2(){
+			var iowindow=document.getElementById("ex");
+			 
+			var im = 3;//亂數決定輸出內容
+			var dmg = monster[im].ATK-j.DEF;
+			var atk = j.ATK-monster[im].DEF;
+			HP=monster[im].HP
+			iowindow.innerHTML+='<p style ="line-height: 30px">遇到了'+monster[im].name+'LV:'+monster[im].LV+'</p>';	
+			var i = 0;
+			while (HP>0){
+				i++;
+				if(atk<1) atk = 0;	
+				HP = HP-atk;
+				if(HP<=0) break;
+				
+				if(dmg<1) dmg = 0;
+				j.HP = j.HP-dmg;
+				var tol_atk = i*atk; var tol_dmg = i*dmg;
+				if (j.HP<=0){
+					iowindow.innerHTML+='<p style ="line-height: 30px">你對'+monster[im].name+'造成了'+tol_atk+'點傷害'+'</br>'+monster[im].name+'對你造成了'+tol_dmg+'點傷害</p>';	
+					iowindow.innerHTML+='<p style ="line-height: 30px">你被'+monster[im].name+'擊敗了</p>';
+					return ;
+					}
+			}	
+			console.log (i);
+			if(j.HP>0){
+				iowindow.innerHTML+='<p style ="line-height: 30px">你對'+monster[im].name+'造成了'+tol_atk+'點傷害'+'</br>'+monster[im].name+'對你造成了'+tol_dmg+'點傷害</p>';	
+				iowindow.innerHTML+='<p style ="line-height: 30px">你戰勝了'+monster[im].name+'獲得了'+monster[im].UPEX+'點經驗</p>';
+				j.giveEX(monster[im].UPEX);
+
+			}
+		}
+		
+		function attack ()
+		{
+			var iowindow=document.getElementById("ex");
+			 
+			var im = Math.floor( 0 + Math.random() * (num.monster) );//亂數決定輸出內容
+			var dmg = monster[im].ATK-j.DEF;
+			var atk = j.ATK-monster[im].DEF;
+			HP=monster[im].HP
+			iowindow.innerHTML+='<p style ="line-height: 30px">遇到了'+monster[im].name+'LV:'+monster[im].LV+'</p>';	
+			var i = 0;
+			while(HP>0){
+				i++;
+				if(atk<1) atk = 0;	
+				HP = HP-atk;
+				if(HP<0) break;
+				
+				if(dmg<1) dmg = 0;
+				j.HP = j.HP-dmg;
+				var tol_atk = i*atk; var tol_dmg = i*dmg;
+				if (j.HP<=0){
+					iowindow.innerHTML+='<p style ="line-height: 30px">你對'+monster[im].name+'造成了'+tol_atk+'點傷害'+'</br>'+monster[im].name+'對你造成了'+tol_dmg+'點傷害</p>';	
+					iowindow.innerHTML+='<p style ="line-height: 30px">你被'+monster[im].name+'擊敗了</p>';
+					return ;
+				}
+			}
+			console.log (i);
+			
+			if(j.HP>0)
+			{
+				iowindow.innerHTML+='<p style ="line-height: 30px">你對'+monster[im].name+'造成了'+tol_atk+'點傷害'+'</br>'+monster[im].name+'對你造成了'+tol_dmg+'點傷害</p>';	
+				iowindow.innerHTML+='<p style ="line-height: 30px">你戰勝了'+monster[im].name+'獲得了'+monster[im].UPEX+'點經驗</p>';
+				j.giveEX(monster[im].UPEX);
+				return ;
+			}
+				
+	  }
+		
+		function drop ()
+		{
+		var iowindow=document.getElementById("ex");
+		var im = Math.floor( 0 + Math.random() * (num.item ) );//亂數決定輸出內容
+		//0=紅，1=藍，2=經驗瓶，3=金錢
+		iowindow.innerHTML+='<p>撿到了'+item[im].name+'增加了:'+item[im].amount+'點'+item[im].effect+'</p>';
+		switch (item[im].type)
+		{
+			case 0:
+			j.HP=j.HP+item[im].amount;
+			break;
+			case 1:
+			j.MP=j.MP+item[im].amount;
+			break;		
+			case 2:
+			j.giveEX(item[im].amount);
+			
+			break;	
+			case 3:
+			j.money = j.money+item[im].amount;
+			break; 
+		}
+		}
+	
+		//探索函式結束
 		function housef(){
+		var iowindow=document.getElementById("stron");
+		iowindow.innerHTML='<div style ="float:top;font-size:50px;background-color:#FFCC00;border:2px orange solid;padding:5px;">'+
+			'<div onclick="warehouse()" style ="float:top;font-size:50px;background-color:#FFFFCC;border:2px orange solid;text-align:center">倉庫</div>'+
+			'</div>';
+		}
+		
+		/*function housef(){
 		var iowindow=document.getElementById("stron");
 		iowindow.innerHTML='<div style ="float:top;font-size:50px;background-color:#FFCC00;border:2px orange solid;padding:5px;">'+
 			'<div onclick="" style ="float:top;font-size:50px;background-color:#FFFFCC;border:2px orange solid;text-align:center">倉庫</div>'+
 			'</div>';
-		}
-		function backpackf(){
+		}*/
+		/*function backpackf(){
 			var iowindow=document.getElementById("stron");
 			iowindow.innerHTML='';
 			j.backpackarrf(iowindow);
+		}*/
+		function backpackf(){
+			var iowindow=document.getElementById("stron");
+			iowindow.innerHTML='<div id="ex" class = "story_border"></div><br>';
+			var start_story=document.getElementById("ex");
+	
+			start_story.innerHTML=
+				'<div id="show_weapon" style ="float:top;font-size:50px;background-color:#FFCC00;border:2px orange solid;padding:5px;">'+'物品'+'</br>'+'</div>'+
+				'<div id="show_armor0" >'+commodity[0].name+'持有'+commodity[0].value+'個'+"   庫存"+commodity[0].reserve+'</br>'+
+				'<div onclick="TAKE(0)" style ="float:left;font-size:45px;width:50px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;">+</div>'+
+				'<div onclick="PUT(0)" style ="float:left;font-size:45px;width:50px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;margin-left:50px">-</div>'+
+				'</div>'+
+				
+				'<div id="show_armor1" >'+commodity[1].name+'持有'+commodity[1].value+'個'+"   庫存"+commodity[1].reserve+'</br>'+
+				'<div onclick="TAKE(1)" style ="float:left;font-size:45px;width:50px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;">+</div>'+
+				'<div onclick="PUT(1)" style ="float:left;font-size:45px;width:50px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;margin-left:50px">-</div>'+
+				'</div>'+
+				
+				'<div id="show_armor2" >'+commodity[2].name+'持有'+commodity[2].value+'個'+"   庫存"+commodity[2].reserve+'</br>'+
+				'<div onclick="TAKE(2)" style ="float:left;font-size:45px;width:50px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;">+</div>'+
+				'<div onclick="PUT(2)" style ="float:left;font-size:45px;width:50px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;margin-left:50px">-</div>'+
+				'</div>';
+				/*'<div id="show_armor1">'+commodity[1].name+'持有'+commodity[1].value+'個</br>'+'</div>'+
+				'<div id="show_armor2">'+commodity[2].name+'持有'+commodity[2].value+'個</br>'+'</div>';*/
+		}
+		function TAKE(thatCM){
+			if(commodity[thatCM].reserve > 0){
+				commodity[thatCM].reserve--;
+				commodity[thatCM].value++;
+			}
+			backpackf();
+		}
+		function PUT(thatCM){
+			if(commodity[thatCM].value > 0){
+				commodity[thatCM].reserve++;
+				commodity[thatCM].value--;
+			}
+			backpackf();
+		}
+		
+		
+		function warehouse()
+		{
+			var iowindow=document.getElementById("stron");
+			iowindow.innerHTML='<div id="ex" class = "story_border"></div><br>';
+			var start_story=document.getElementById("ex");
+	
+			start_story.innerHTML=  
+			'<div id="show_weapon" style ="float:top;font-size:50px;background-color:#FFCC00;border:2px orange solid;padding:5px;">'+'武器'+'</br>'+'</div>'+
+			'<div id="show_weapon0">'+aa[0].name+'持有'+aa[0].value+'個'+'</div>'+
+			'<div onclick="equipA(0)" style ="float:right;font-size:45px;width:100px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;">裝備</div>'
+			+
+			'</br>'+
+			'<div id="show_weapon1">'+aa[1].name+'持有'+aa[1].value+'個'+'</div>'+
+			'<div onclick="equipA(1)" style ="float:right;font-size:45px;width:100px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;">裝備</div>'
+			+
+			'</br>'+
+			
+			'<div id="show_weapon" style ="float:top;font-size:50px;background-color:#FFCC00;border:2px orange solid;padding:5px;">'+'防具'+'</br>'+'</div>'+
+			'<div id="show_armor0" >'+dd[0].name+'持有'+dd[0].value+'個'+
+			'<div onclick="equipd(0)" style ="float:right;font-size:45px;width:100px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;">裝備</div>'
+			+
+			'</br>'+'</div>'+
+			'<div id="show_armor1">'+dd[1].name+'持有'+dd[1].value+'個'+'</div>'+
+			'<div onclick="equipd(1)" style ="float:right;font-size:45px;width:100px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;">裝備</div>'
+			+
+			'</br>'+
+			'<div id="show_armor2">'+dd[2].name+'持有'+dd[2].value+'個'+'</div>'+
+			'<div onclick="equipd(2)" style ="float:right;font-size:45px;width:100px;height:50px;background-color:#FFFFCC;text-align:center;overflow:visible;">裝備</div>'
+			+
+			'</br>'+
+			
+			'<div id="show_weapon" style ="float:top;font-size:50px;background-color:#FFCC00;border:2px orange solid;padding:5px;">'+'物品'+'</br>'+'</div>'+
+			'<div id="show_armor0" >'+commodity[0].name+'持有'+commodity[0].reserve+'個</br>'+'</div>'+
+			'<div id="show_armor1">'+commodity[1].name+'持有'+commodity[1].reserve+'個</br>'+'</div>'+
+			'<div id="show_armor2">'+commodity[2].name+'持有'+commodity[2].reserve+'個</br>'+'</div>';
+		}
+		function equipA(theretype){
+			if(aa[theretype].value>0)
+			{
+				j.WAE(aa[theretype]);
+				charactervalueout();
+			}
+		}
+		function equipd(theretype){
+			if(dd[theretype].value>0)
+			{
+				j.WDE(dd[theretype]);
+				charactervalueout();
+			}
 		}
 		
 		function gamego(){
@@ -205,9 +591,14 @@
 			j.nameok(document.getElementById("namename").value);
 		}
 		function gametext(){
-		
+			
 		}
 		function serer(){
+			gs.innerHTML=
+			'楊宗霈/構思與開發網頁程式碼<br>倪郁樂/開發網頁程式碼<br>最近更新日期2018/6/19'+
+			'<div style ="float:top;font-size:50px;background-color:#FFCC00;border:2px orange solid;padding:5px;">'+
+			'<div onclick="gamereturn()" style ="float:top;font-size:50px;background-color:#FFFFCC;border:2px orange solid;text-align:center">返回</div>'+
+			'</div>';
 		}
 		
 		
@@ -262,20 +653,23 @@
 		}*/
 		//window.addEventListener( "load", start, false );
 		function gamereturn(){
-			gs.innerHTML='<div style ="float:bottom;margin:20px;width:50%;left:25%;right:25%;height:100px;text-align:center;">極小RPG</div>'+
+			gs.innerHTML= 
+			'<div style ="float:bottom;margin:20px;width:50%;left:25%;right:25%;height:100px;text-align:center;">極小RPG</div>'+
 			'<div id = "start" onclick="gamego()"   style ="float:bottom;margin:20px;width:50%;left:25%;right:25%;height:100px;text-align:center;">開始遊戲</div>'+
 			'<div id = "game" onclick="gametext()"   style ="float:bottom;margin:20px;width:50%;left:25%;right:25%;height:100px;text-align:center;">遊戲說明</div>'+
 			'<div id = "start" onclick="serer()"   style ="float:bottom;margin:20px;width:50%;left:25%;right:25%;height:100px;text-align:center;">開發人員</div>'+
-			'<div id = "HI"></div>';
+			'<div id = "HI"></div>'
+			;
 		}
 	  </script>
    </head>
    <body>
    <form action = "#">
-      <div id="gs"style="width:100%";>
+      <div id="gs"style="width:100%;background-image:url(dragon-eye-3235673_1280.png);height:100%">
 			<div style ="float:bottom;margin:20px;width:50%;left:25%;right:25%;height:100px;text-align:center;">極小RPG</div>
 			<div id = "start" onclick="gamego()"   style ="float:bottom;margin:20px;width:50%;left:25%;right:25%;height:100px;text-align:center;">開始遊戲</div>
 			<div id = "game" onclick="gametext()"   style ="float:bottom;margin:20px;width:50%;left:25%;right:25%;height:100px;text-align:center;">遊戲說明</div>
+			<div id = "imgmusic" onclick = "imgmusic()" style = "float:bottom;margin:20px;width:50%;left:25%;right:25%;height:100px;text-align:center;">遊戲素材來源</div>
 			<div id = "start" onclick="serer()"  style ="float:bottom;margin:20px;width:50%;left:25%;right:25%;height:100px;text-align:center;">開發人員</div>
 			<div id = "HI"></div>
 	  </div>
