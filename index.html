@@ -209,7 +209,14 @@
 		}
 		function villageHome(){
 			var iowindow=document.getElementById("stron");
-			iowindow.innerHTML='<p>嗨!你好!</p>';
+			/*var now=new Date();*/
+			var number = Math.random(); 
+			var num=number;
+			num=Math.round(num);
+			num=num*10;
+			if(num==0&&num<6){iowindow.innerHTML='<p>嗨!你好!</p>';}
+			else if(num>=6&&num<8){iowindow.innerHTML='<p>森林有龍!去打獵請小心!</p>';}
+			else if(num>=8&&num<11){iowindow.innerHTML='<p>森林有龍!去打獵請小心!</p><p>上次有人在森林待100天就遇到了</p><p>但他的朋友待得比他久卻沒遇到呢</p>';}
 		}
 		function market(){
 			var iowindow=document.getElementById("stron");
