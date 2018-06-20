@@ -52,6 +52,16 @@
 	  item[3]=new it('錢袋',10,'金錢',3);
 	  //統計有幾個  武器，防具，怪，撿
 	  var num=new number(2,3,3,4);//
+	  
+	  var skill=[];
+	  skill[0]=new skills('魔力護盾');
+	  skill[1]=new skills('魔力強擊');
+	  skill[2]=new skills('強擊');
+	  
+	  function skills(name){
+		this.name=name;
+		this.yasno=0;
+	  }
 		//num命名函數
 	  function number(weapon,armor,monster,item)
 	  {
@@ -218,6 +228,11 @@
 			if(num>=0&&num<60){iowindow.innerHTML='<p>嗨!你好!</p>';}
 			else if(num>=60&&num<98){iowindow.innerHTML='<p>森林有龍!去打獵請小心!</p>';}
 			else if(num>=98){iowindow.innerHTML='<p>上次有人在森林待100天就遇到了龍!!!</p><p>但他的朋友待得比他久卻沒遇到呢> < </p>';}
+			
+			if(num>=30&&num<35){iowindow.innerHTML+='<p>我想你應該需要學習'+skill[0].name+'技能來保護自己</p>';if(skill[0].yasno==1)iowindow.innerHTML+='<p>你學過了阿</p>';skill[0].yasno=1;}
+			else if(num>=50&&num<55){iowindow.innerHTML+='<p>我想你應該需要這個'+skill[0].name+'技能</p>';if(skill[1].yasno==1)iowindow.innerHTML+='<p>你學過了阿</p>';skill[1].yasno=1;}
+			else if(num>=70&&num<75){iowindow.innerHTML+='<p>為了預防你遇到龍我教你'+skill[2].name+'吧</p>';if(skill[2].yasno==1)iowindow.innerHTML+='<p>你學過了阿</p>';skill[2].yasno=1;}
+			
 		}
 		function market(){
 			var iowindow=document.getElementById("stron");
@@ -454,7 +469,7 @@
 		function attack2(){
 			var iowindow=document.getElementById("ex");
 			 
-			var im = 3;//亂數決定輸出內容
+			var im = 3;
 			var dmg = monster[im].ATK-j.DEF;
 			var atk = j.ATK-monster[im].DEF;
 			HP=monster[im].HP
@@ -463,11 +478,30 @@
 			while (HP>0){
 				i++;
 				if(atk<1) atk = 0;	
-				HP = HP-atk;
+				
+				if(skill[1].yesno==1&&j.mp>=10){
+					var atkk=atk;
+					HP = HP-atk*10;
+				}else if(skill[2].yesno==1){
+					var atkk=atk;
+					HP = HP-atk*5;
+				}else {
+					HP = HP-atk;
+				}
 				if(HP<=0) break;
 				
 				if(dmg<1) dmg = 0;
-				j.HP = j.HP-dmg;
+				if(skill[0].yesno==1){
+					var dmgg=dmg;
+					while(j.mp){
+						dmgg--;
+						j.mp--;
+					}
+					j.HP = j.HP-dmgg;
+				}else 
+					{
+					j.HP = j.HP-dmg;
+				}
 				var tol_atk = i*atk; var tol_dmg = i*dmg;
 				if (j.HP<=0){
 					iowindow.innerHTML+='<p style ="line-height: 30px">你對'+monster[im].name+'造成了'+tol_atk+'點傷害'+'</br>'+monster[im].name+'對你造成了'+tol_dmg+'點傷害</p>';	
@@ -497,7 +531,8 @@
 			while(HP>0){
 				i++;
 				if(atk<1) atk = 0;	
-				HP = HP-atk;
+					HP = HP-atk;
+					
 				if(HP<0) break;
 				
 				if(dmg<1) dmg = 0;
