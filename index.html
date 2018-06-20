@@ -32,7 +32,7 @@
 	  </style>
       <script type = "text/javascript">//font-family:Calibri;
 	  var nwindow=document.getElementById("gs");
-	  
+	  var newname=0;
 			
 	  var aa= [];
 	  aa[0]=new CE('小刀',5,0,0,0,1,10);
@@ -212,11 +212,12 @@
 			/*var now=new Date();*/
 			var number = Math.random(); 
 			var num=number;
+			num=num*100;
 			num=Math.round(num);
-			num=num*10;
-			if(num==0&&num<6){iowindow.innerHTML='<p>嗨!你好!</p>';}
-			else if(num>=6&&num<8){iowindow.innerHTML='<p>森林有龍!去打獵請小心!</p>';}
-			else if(num>=8&&num<11){iowindow.innerHTML='<p>森林有龍!去打獵請小心!</p><p>上次有人在森林待100天就遇到了</p><p>但他的朋友待得比他久卻沒遇到呢</p>';}
+			
+			if(num>=0&&num<60){iowindow.innerHTML='<p>嗨!你好!</p>';}
+			else if(num>=60&&num<98){iowindow.innerHTML='<p>森林有龍!去打獵請小心!</p>';}
+			else if(num>=98){iowindow.innerHTML='<p>上次有人在森林待100天就遇到了龍!!!</p><p>但他的朋友待得比他久卻沒遇到呢> < </p>';}
 		}
 		function market(){
 			var iowindow=document.getElementById("stron");
@@ -661,14 +662,20 @@
 		}
 		
 		function gamego(){
-			gs.innerHTML='輸入你的名子<br>'+
-			'<input id="namename" type="text" value="不知名勇者" style="margin-bottom:5px;font-size:50%">'+
-			'<div style ="float:top;font-size:50px;background-color:#FFCC00;border:2px orange solid;padding:5px;">'+
-			'<div onclick="game()" style ="float:top;font-size:50px;background-color:#FFFFCC;border:2px orange solid;text-align:center">確定</div>'+
-			'</div>'+
-			'<div style ="float:top;font-size:50px;background-color:#FFCC00;border:2px orange solid;padding:5px;">'+
-			'<div onclick="gamereturn()" style ="float:top;font-size:50px;background-color:#FFFFCC;border:2px orange solid;text-align:center">返回</div>'+
-			'</div>';
+			if(newname==0){
+				gs.innerHTML='輸入你的名子<br>'+
+				'<input id="namename" type="text" value="不知名勇者" style="margin-bottom:5px;font-size:50%">'+
+				'<div style ="float:top;font-size:50px;background-color:#FFCC00;border:2px orange solid;padding:5px;">'+
+				'<div onclick="game()" style ="float:top;font-size:50px;background-color:#FFFFCC;border:2px orange solid;text-align:center">確定</div>'+
+				'</div>'+
+				'<div style ="float:top;font-size:50px;background-color:#FFCC00;border:2px orange solid;padding:5px;">'+
+				'<div onclick="gamereturn()" style ="float:top;font-size:50px;background-color:#FFFFCC;border:2px orange solid;text-align:center">返回</div>'+
+				'</div>';
+				}
+			else if(newname>0){
+				
+				game();
+			}
 			
 		}//background-color:#FFCC00;
 		function gametext(){
@@ -698,7 +705,8 @@
 		
 		
 		function game(){
-			j.nameok(document.getElementById("namename").value);
+			if(newname==0)j.nameok(document.getElementById("namename").value);
+			newname=1;
 			var giveexex=0;
 			gs.innerHTML='<div id = "gotobutton" style = "height:100px;width:100%;">'+
 			'<input id="village" type="button" value="村莊" style="margin-bottom:5px;font-size:50px">'+
