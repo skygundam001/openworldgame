@@ -479,21 +479,21 @@
 				i++;
 				if(atk<1) atk = 0;	
 				
-				if(skill[1].yesno==1&&j.mp>=10){
-					var atkk=atk;
-					HP = HP-atk*10;
-				}else if(skill[2].yesno==1){
+				if(skill[1].yesno==1&&j.mp>=30){
 					var atkk=atk;
 					HP = HP-atk*5;
+				}else if(skill[2].yesno==1){
+					var atkk=atk;
+					HP = HP-atk*2;
 				}else {
 					HP = HP-atk;
 				}
 				if(HP<=0) break;
 				
 				if(dmg<1) dmg = 0;
-				if(skill[0].yesno==1){
+				if(skill[0].yesno==1&&j.mp>0){
 					var dmgg=dmg;
-					while(j.mp){
+					while(j.mp>0){
 						dmgg--;
 						j.mp--;
 					}
